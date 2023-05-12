@@ -38,7 +38,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddDbContext<UalaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SQLServer")));
+builder.Services.AddDbContext<UalaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("TestServer")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
