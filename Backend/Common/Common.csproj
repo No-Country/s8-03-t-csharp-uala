@@ -10,5 +10,4 @@
     <Folder Include="DTO\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>
-
 </Project>
