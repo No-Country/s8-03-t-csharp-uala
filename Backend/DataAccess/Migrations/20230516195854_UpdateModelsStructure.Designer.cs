@@ -3,6 +3,7 @@ using System;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(UalaContext))]
-    partial class UalaContextModelSnapshot : ModelSnapshot
+    [Migration("20230516195854_UpdateModelsStructure")]
+    partial class UpdateModelsStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace DataAccess.Migrations
 
                     b.Property<decimal>("InvestedBalance")
                         .HasColumnType("numeric");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("Url_ProfilePicture")
                         .HasColumnType("text");
@@ -323,6 +322,9 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.Identity.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("AccountHolder")
+                        .HasColumnType("text");
 
                     b.Property<int?>("AddressId")
                         .HasColumnType("integer");

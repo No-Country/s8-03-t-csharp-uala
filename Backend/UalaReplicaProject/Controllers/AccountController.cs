@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using DataAccess.Models.Identity;
 using CustomApi.Models.Identity;
 using Microsoft.EntityFrameworkCore;
+using DataAccess;
 
 [Route("api/[controller]")]
 [ApiController]

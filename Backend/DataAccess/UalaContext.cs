@@ -16,8 +16,8 @@ namespace DataAccess
         public UalaContext(DbContextOptions<UalaContext> options) : base(options)
         {
         }
-        DbSet<ApplicationUser> Clients { get; set; }
-        DbSet<Account> Accounts { get; set; }
-        DbSet<Transaction> Transactions { get; set; }
+        public DbSet<ApplicationUser> Clients { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

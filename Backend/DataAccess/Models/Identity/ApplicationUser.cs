@@ -11,6 +11,7 @@ namespace DataAccess.Models.Identity
     public class ApplicationUser : IdentityUser
     {
         public ICollection<Account> Accounts { get; set; }
-        
+        public Address Address { get; set; }
+
     }
 }
