@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models.ApplicationModels
+namespace Common.DTO.TransactionDTOs
 {
-    public class Transaction
+    public class CreateTransactionDTO
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
-        public DateTime Date { get; set; }
+        [JsonIgnore]
+        public DateTime Date { get; set; } = DateTime.Now;
         public decimal Amount { get; set; }
-        public string Motive { get; set; }  // alquiler, prestamo, honorarios, pagoServicios , otro
-        public string Reference { get; set; } 
+        public string Motive { get; set; }
+        public string Reference { get; set; }
         public Guid SourceAccountId { get; set; }
         public Guid DestinationAccountId { get; set; }
     }
