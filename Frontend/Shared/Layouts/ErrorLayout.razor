@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+
+<MudThemeProvider Theme="_currentTheme" />
+<MudSnackbarProvider />
+<style>
+    html, body {
+        background: linear-gradient(rgba(112,182,235,0.85),rgba(28,122,192,0.85));
+    }
+</style>
+
+
+    <div class="d-flex justify-center align-center" style="height:100vh">
+
+        @Body
+
+
+
+    </div>
+
+
+@code {
+    private MudTheme _currentTheme = new MudBlazorAdminDashboard();
+}
