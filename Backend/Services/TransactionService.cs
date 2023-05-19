@@ -106,6 +106,30 @@ namespace Services
 
         public async Task<ResponseDTO> MakeTransaction(CreateTransactionDTO createTransactionDTO)
         {
+            /*
+            var sourceAccount = await _accountRepository.GetAccountById(createTransactionDTO.SourceAccountId);
+            var destinationAccount = await _accountRepository.GetAccountById(createTransactionDTO.DestinationAccountId);
+
+            // Verificar si la cuenta de origen tiene saldo suficiente
+            if (sourceAccount.Balance < createTransactionDTO.Amount)
+            {
+                return new ResponseDTO
+                {
+                    Success = false,
+                    Result = null,
+                    Message = "Insufficient balance in the source account",
+                    StatusCode = 400
+                };
+            }*/
+            
+            /*
+            Actualizar el saldo de la cuenta de origen y destino
+            sourceAccount.Balance -= createTransactionDTO.Amount;
+            destinationAccount.Balance += createTransactionDTO.Amount;
+            */
+
+            // Crear la transacción
+
             var transaction = new Transaction
             {
                 Id = Guid.NewGuid(),

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(UalaContext))]
-    [Migration("20230516200232_DeletedAccountHolder")]
-    partial class DeletedAccountHolder
+    [Migration("20230519232553_Initial commit")]
+    partial class Initialcommit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,9 +36,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Alias")
                         .HasColumnType("text");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("text");
-
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
 
@@ -48,12 +45,15 @@ namespace DataAccess.Migrations
                     b.Property<decimal>("InvestedBalance")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Url_ProfilePicture")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Accounts");
                 });
@@ -89,9 +89,6 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uuid");
-
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
@@ -111,8 +108,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
 
                     b.ToTable("Transactions");
                 });
@@ -333,16 +328,11 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.ApplicationModels.Account", b =>
                 {
-                    b.HasOne("DataAccess.Models.Identity.ApplicationUser", null)
+                    b.HasOne("DataAccess.Models.Identity.ApplicationUser", "Owner")
                         .WithMany("Accounts")
-                        .HasForeignKey("ApplicationUserId");
-                });
+                        .HasForeignKey("OwnerId");
 
-            modelBuilder.Entity("DataAccess.Models.ApplicationModels.Transaction", b =>
-                {
-                    b.HasOne("DataAccess.Models.ApplicationModels.Account", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountId");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -403,11 +393,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ApplicationModels.Account", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Identity.ApplicationUser", b =>
