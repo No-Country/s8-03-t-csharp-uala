@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(UalaContext))]
-    [Migration("20230516201031_AccountOwner")]
-    partial class AccountOwner
+    [Migration("20230520003356_Account")]
+    partial class Account
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

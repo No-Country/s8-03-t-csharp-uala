@@ -1,108 +1,76 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Common.DTO;
+using Common.DTO.AccountDTOs;
+using Contracts.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
-using DataAccess.Models.Identity;
-using CustomApi.Models.Identity;
-using Microsoft.EntityFrameworkCore;
-using DataAccess;
+using Swashbuckle.AspNetCore.Annotations;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-[Route("api/[controller]")]
-[ApiController]
-public class AuthenticateController : ControllerBase
+namespace UalaReplicaProject.Controllers
 {
-
-    private readonly UserManager<ApplicationUser> userManager;
-    private readonly RoleManager<IdentityRole> roleManager;
-    private readonly IConfiguration _configuration;
-
-    public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AccountController : ControllerBase
     {
-        this.userManager = userManager;
-        this.roleManager = roleManager;
-        _configuration = configuration;
-    }
+        private readonly IAccountService _AccountService;
 
-    [HttpPost]
-    [Route("Login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
-    {       
-        var user = await userManager.FindByEmailAsync(model.Email);
-        if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+        public AccountController(IAccountService AccountService)
         {
-            var userRoles = await userManager.GetRolesAsync(user);
+            _AccountService = AccountService;
+        }
 
-            var authClaims = new List<Claim>
-                {                    
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
-            authClaims.Add(new Claim(ClaimTypes.Name, user.UserName));
-            authClaims.Add(new Claim(ClaimTypes.Email, user.Email));
-            foreach (var userRole in userRoles)
+        //TODO: UpdateAccount, photo_client
+
+        //[HttpGet("AllAccounts/{id}")]
+        //public async Task<IActionResult> GetAllAccounts(Guid id)
+        //{
+        //    var response = await _AccountService.GetAllAccounts();
+
+        //    if(!response.Success)
+        //    {
+        //        return StatusCode(response.StatusCode, response.Message);
+        //    }
+        //    return Ok(response);
+
+        //}
+
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAccountById(Guid id)
+        {
+            var response = await _AccountService.GetAccountById(id);
+
+            if (!response.Success)
             {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                return StatusCode(response.StatusCode, response.Message);
             }
 
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-            var token = new JwtSecurityToken(
-                claims: authClaims,
-                expires: DateTime.UtcNow.AddDays(7),
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                );
+            return Ok(response);
 
-            return Ok(new LoginResult
+        }
+
+        [HttpPost("post")]
+        public async Task<IActionResult> MakeAccount([FromBody] CreateAccountDTO createAccountDTO)
+        {
+            var response = await _AccountService.MakeAccount(createAccountDTO);
+
+            if (!response.Success)
             {
-                Successful = true,
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo,
-                Error = ""
-            });
-        }
-        return BadRequest(new LoginResult { Successful = false, Error = "Username and password are invalid.",Expiration = DateTime.Now.AddMinutes(-4),Token= null });
-    }
+                return StatusCode(response.StatusCode, response.Message);
+            }
 
-    [HttpPost]
-    [Route("Register")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel model)
-    {
-        var userExists = await userManager.FindByNameAsync(model.Username);
-        if (userExists != null)
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User already exists!" });
-
-        ApplicationUser user = new ApplicationUser()
-        {
-            Email = model.Email,
-            SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = model.Username
-        };
-        var result = await userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-        return Ok(new { Status = "Success", Message = "User created successfully!" });
-    }
-
-    [HttpPost]
-    [Route("AddRole")]
-    public async Task<IActionResult> AddRole(string Role, string name)
-    {
-        var user = await userManager.FindByNameAsync(name);
-
-        if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-            await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-        if (!await roleManager.RoleExistsAsync(UserRoles.User))
-            await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-        if (await roleManager.RoleExistsAsync(UserRoles.Admin))
-        {
-            await userManager.AddToRoleAsync(user, UserRoles.Admin);
+            return Ok(response);
         }
 
-        return Ok(new { Status = "Success", Message = "User created successfully!" });
-    }
 
+        //[HttpPut("{id:guid}", Name = "UpdateAccoun")]
+        [HttpPut("put")]
+        public async Task<IActionResult> PutAccount(Guid id, AccountDTO accountDTO)
+        {
+            var response = _AccountService.UpdateAccount(id, accountDTO);
+            return Ok(response);
+        }
+    }
 }
-
-

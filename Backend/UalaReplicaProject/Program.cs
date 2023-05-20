@@ -43,7 +43,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddDbContext<UalaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("TestServer")));
+builder.Services.AddDbContext<UalaContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("local")));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -82,6 +82,8 @@ builder.Services.AddCors(o =>
 // Add your custom dependencies here
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 
