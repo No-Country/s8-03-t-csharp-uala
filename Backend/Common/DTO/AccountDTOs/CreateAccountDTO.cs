@@ -9,6 +9,6 @@
         public decimal InvestedBalance { get; set; }
         public long CVU { get; set; }
         public string Alias { get; set; }
-        public Guid OwnerId { get; set; }
+        public string OwnerId { get; set; }
     }
 }

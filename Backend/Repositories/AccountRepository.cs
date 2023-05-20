@@ -35,12 +35,10 @@ namespace Repositories
 
         public async Task<Account> MakeAccount(Account account)
         {
-
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
 
             return account;
-           
         }
 
         public  Task UpdateAccount(Account account)

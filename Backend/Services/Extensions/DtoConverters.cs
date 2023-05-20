@@ -15,7 +15,6 @@ public static class DtoConverters
             CVU = accountDTO.CVU,
             InvestedBalance = accountDTO.InvestedBalance,
             OwnerId = accountDTO.OwnerId,
-            Transactions = (ICollection<Transaction>)accountDTO.Transactions,
             Url_ProfilePicture = accountDTO.Url_ProfilePicture
         };
 
@@ -29,7 +28,6 @@ public static class DtoConverters
             CVU = account.CVU,
             InvestedBalance = account.InvestedBalance,
             OwnerId = account.OwnerId,
-            Transactions = (ICollection<System.Transactions.Transaction>)account.Transactions,
             Url_ProfilePicture = account.Url_ProfilePicture
         };
 }
