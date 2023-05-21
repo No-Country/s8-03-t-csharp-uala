@@ -1,6 +1,7 @@
 ﻿using Common.DTO;
 using Common.DTO.AccountDTOs;
 using Contracts.Services;
+using DataAccess.Models.ApplicationModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,13 +64,15 @@ namespace UalaReplicaProject.Controllers
 
             return Ok(response);
         }
-
-
-        //[HttpPut("{id:guid}", Name = "UpdateAccoun")]
+        
         [HttpPut("put")]
-        public async Task<IActionResult> PutAccount(Guid id, AccountDTO accountDTO)
+        public ActionResult PutAccount(Guid id, EditAccountDTO editAccountDTO)
         {
-            var response = _AccountService.UpdateAccount(id, accountDTO);
+            var response = _AccountService.UpdateAccount(id, editAccountDTO);
+            if(!response.Success)
+            {
+                return StatusCode(response.StatusCode, response.Message);
+            }
             return Ok(response);
         }
     }

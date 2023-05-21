@@ -6,7 +6,7 @@ namespace Contracts.Services
     public interface IAccountService
     {
         Task<ResponseDTO> GetAccountById(Guid id);
-        Task<ResponseDTO> UpdateAccount(Guid id, AccountDTO accountDTO);
+        ResponseDTO UpdateAccount(Guid id, EditAccountDTO accountDTO);
         Task<ResponseDTO> MakeAccount(CreateAccountDTO createAccountDTO);
     }
 }

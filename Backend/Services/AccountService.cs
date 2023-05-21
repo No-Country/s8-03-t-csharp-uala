@@ -137,32 +137,21 @@ namespace Services
             return response;
         }
 
-        public async Task<ResponseDTO> UpdateAccount(Guid id, AccountDTO accountDTO)
+        public ResponseDTO UpdateAccount(Guid id, EditAccountDTO editAccountDTO)
         {
-            var response = new ResponseDTO
+            var account = editAccountDTO.ToEditAccountDTO(id);
+            var response = _accountRepository.UpdateAccount(account);
+            var dto = response.ToAccountDTO();
+
+            var rpta = new ResponseDTO()
             {
                 Success = true,
-                Result = null,
-                Message = "Could not update account",
-                StatusCode = 400
+                Result = dto,
+                Message = "Account updated successfully",
+                StatusCode = 201
             };
 
-            var existingAccount = await _accountRepository.GetAccountById(id);
-
-            if (existingAccount is not null) 
-            {
-                var account = accountDTO.ToAccount();
-                await _accountRepository.UpdateAccount(account);
-                
-                response = new ResponseDTO
-                {
-                    Success = true,
-                    Result = accountDTO,
-                    Message = "Account updated successfully",
-                    StatusCode = 201
-                };
-            }
-            return response;
+            return rpta;
         }
     }
 }

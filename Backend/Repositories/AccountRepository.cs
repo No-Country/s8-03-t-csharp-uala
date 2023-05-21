@@ -41,10 +41,11 @@ namespace Repositories
             return account;
         }
 
-        public  Task UpdateAccount(Account account)
+        public Account UpdateAccount(Account account)
         {
             _context.Accounts.Update(account);
-            return Task.CompletedTask;
+            _context.SaveChangesAsync();
+            return account;
         }
     }
 }
