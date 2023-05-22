@@ -1,10 +1,51 @@
 ﻿@page "/"
+<style>
+    .contain-home{
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .contain{
+        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+    }
+    .first-image{
+        left: -30px;
+        width: 100%;
+        height: 100%;
+        min-height: 160px
+    }
+    .h4{
+        color: #fff;
+        font-weight: bold;
+    }
+    .button-app{
+        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        
+
+    }
+</style>
 <MudAppBar Color="Color.Primary" Fixed="false">
     <MudImage Alt="Logo" Fluid=true Src="/img/Logo.svg"/>
     <MudSpacer />
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
 </MudAppBar>
 
+<MudContainer Fixed=true Class="contain-home d-flex flex-column justify-center align-center gap-4" >
+    <MudPaper Class="contain d-flex flex-row justify-center align-center" MinHeight="250px" Width="100%">
+        <MudPaper Class="d-flex flex-row justify-center flex-wrap align-center relative" MaxWidth="200px">
+            <MudImage Src="/img/Rectangle (1).svg" Class="absolute first-image"></MudImage>
+            <MudImage Src="/img/Rectangle.svg" Class="relative"></MudImage>
+        </MudPaper>
+        <MudText Typo="Typo.h3" Class="h4"> Comenzá hoy a invertir </MudText>
+    
+    </MudPaper>
+
+    <MudButton Variant="Variant.Filled" Class="button-app rounded-pill px-3 py-2">DESCARGA LA APP</MudButton>
+
+</MudContainer>
 
 
 
