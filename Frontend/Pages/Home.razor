@@ -1,12 +1,14 @@
 ﻿@page "/"
 <style>
     .contain-home{
-        width: 100%;
+        width: 100vw;
+        min-width: 100vw !important;
         padding: 0;
         margin: 0;
     }
     .contain{
         background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+
     }
     .first-image{
         left: -30px;
@@ -23,8 +25,13 @@
         color: #fff;
         font-size: 14px;
         font-weight: 700;
-        
+    }
 
+    .nav-link{
+        width : fit-content;
+    }
+    .custom-text {
+        
     }
 </style>
 <MudAppBar Color="Color.Primary" Fixed="false">
@@ -45,6 +52,38 @@
 
     <MudButton Variant="Variant.Filled" Class="button-app rounded-pill px-3 py-2">DESCARGA LA APP</MudButton>
 
+    <MudContainer Fixed=false Class="d-flex justify-center flex-column align-center gap-4">
+        <MudPaper Class="ma-2" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/IconCelu.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Conoce nuestra App</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+        
+        <MudPaper Class="ma-2" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/tarjeta.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Emisión de tu tarjeta Visa</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+        <MudPaper Class="ma-2" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/pagos.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Gestión de pagos</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+        <MudPaper Class="ma-2" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/compras.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Compras</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+
+    </MudContainer>
 </MudContainer>
 
 
