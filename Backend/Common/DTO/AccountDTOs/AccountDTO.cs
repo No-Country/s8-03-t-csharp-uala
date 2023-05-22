@@ -1,18 +1,20 @@
-﻿using DataAccess.Models.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace DataAccess.Models.ApplicationModels
+namespace Common.DTO.AccountDTOs
 {
-    public class Account
+    public  class AccountDTO
     {
+        //[JsonIgnore]
         public Guid Id { get; set; }
         public long AccountNumber { get; set; }
+        //public ICollection<Transaction> Transactions { get; set; }
         public string Url_ProfilePicture { get; set; }
         public decimal Balance { get; set; }
         public decimal InvestedBalance { get; set; }
@@ -20,8 +22,7 @@ namespace DataAccess.Models.ApplicationModels
         public string Alias { get; set; }
         public string OwnerId { get; set; }
 
-
-        [ForeignKey("OwnerId")]
-        public ApplicationUser Owner { get; set; }
+        //[ForeignKey("OwnerId")]
+        //public ApplicationUser Owner { get; set; }
     }
 }

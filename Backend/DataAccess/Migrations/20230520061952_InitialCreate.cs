@@ -6,10 +6,26 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataAccess.Migrations
 {
-    public partial class init : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Province = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    Road = table.Column<string>(type: "text", nullable: true),
+                    ZipCode = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -25,11 +41,29 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    Motive = table.Column<string>(type: "text", nullable: true),
+                    Reference = table.Column<string>(type: "text", nullable: true),
+                    SourceAccountId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DestinationAccountId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Discriminator = table.Column<string>(type: "text", nullable: false),
+                    AddressId = table.Column<int>(type: "integer", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -48,6 +82,11 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -76,14 +115,20 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "text", nullable: true)
+                    AccountNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Url_ProfilePicture = table.Column<string>(type: "text", nullable: true),
+                    Balance = table.Column<decimal>(type: "numeric", nullable: false),
+                    InvestedBalance = table.Column<decimal>(type: "numeric", nullable: false),
+                    CVU = table.Column<long>(type: "bigint", nullable: false),
+                    Alias = table.Column<string>(type: "text", nullable: true),
+                    OwnerId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accounts_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Accounts_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -173,27 +218,10 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    AccountId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transactions_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_ApplicationUserId",
+                name: "IX_Accounts_OwnerId",
                 table: "Accounts",
-                column: "ApplicationUserId");
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -227,19 +255,22 @@ namespace DataAccess.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AddressId",
+                table: "AspNetUsers",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_AccountId",
-                table: "Transactions",
-                column: "AccountId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -262,10 +293,10 @@ namespace DataAccess.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Address");
         }
     }
 }
