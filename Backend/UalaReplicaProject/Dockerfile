@@ -7,13 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["UalaReplicaProject/UalaReplicaProject.csproj", "UalaReplicaProject/"]
-COPY ["Common/Common.csproj", "Common/"]
-COPY ["Contracts/Contracts.csproj", "Contracts/"]
-COPY ["DataAccess/DataAccess.csproj", "DataAccess/"]
-COPY ["Services/Services.csproj", "Services/"]
-COPY ["Repositories/Repositories.csproj", "Repositories/"]
-RUN dotnet restore "UalaReplicaProject/UalaReplicaProject.csproj"
+COPY ["UalaReplicaProject.csproj", "."]
+COPY ["../Common/Common.csproj", "."]
+COPY ["../Contracts/Contracts.csproj", "."]
+COPY ["../DataAccess/DataAccess.csproj", "."]
+COPY ["../Services/Services.csproj", "."]
+COPY ["../Repositories/Repositories.csproj", "."]
+RUN dotnet restore "UalaReplicaProject.csproj"
 COPY . .
 WORKDIR "/src/UalaReplicaProject"
 RUN dotnet build "UalaReplicaProject.csproj" -c Release -o /app/build
