@@ -5,9 +5,9 @@ on:
   # Automatically trigger it when detected changes in repo
   push:
     branches: 
-      [ master ]
+      [ main ]
     paths:
-    - 'Backend/UalaReplicaProject/**'
+    - 'Backend/**'
     - '.github/workflows/selecionadouala.yml'
 
   # Allow mannually trigger 
