@@ -29,7 +29,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: ${{ github.workspace }}/Backend/UalaReplicaProject 
+          appSourcePath: ${{ github.workspace }}/Backend 
           registryUrl: docker.io
           registryUsername: ${{ secrets.SELECIONADOUALA_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.SELECIONADOUALA_REGISTRY_PASSWORD }}
