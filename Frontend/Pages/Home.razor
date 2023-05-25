@@ -1,0 +1,196 @@
+﻿@page "/"
+<style>
+    .contain-home{
+        width: 100vw;
+        min-width: 100vw !important;
+        padding: 0;
+        margin: 0;
+    }
+    .contain{
+        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+
+    }
+    .first-image{
+        left: -30px;
+        width: 100%;
+        height: 100%;
+        min-height: 160px
+    }
+    .h4{
+        color: #fff;
+        font-weight: bold;
+    }
+    .button-app{
+        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .nav-link{
+        width : fit-content;
+    }
+
+    .text-app {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 17px;
+        color: #FFFFFF;
+        padding-left: 10px;
+    }
+    .background-section{
+        background-image: linear-gradient(91.65deg, #ff0000d9 0.15%, rgb(255 23 4 / 57%) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%), url(/img/splash-background-home.png);
+        background-size: cover;
+    }
+    .icon-list{
+        color: red;
+        font-size: 0.7rem;
+        margin-left: 5px;
+    }
+    .esfere{
+        width: 97.5px;
+        height: 97px;
+        background: rgba(217, 217, 217, 0.5);
+        border-radius: 100%;
+    }
+    .top{
+        right: 0;
+        top: -30%;
+    }
+    .bottom{
+        bottom: -30%;
+        left: 0;
+    }
+
+    .footer{
+        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+        min-height: 300px;
+    }
+    .card-box-shadow{
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius :  12px
+    }
+</style>
+<MudAppBar Color="Color.Primary" Fixed="false">
+    <MudImage Alt="Logo" Fluid=true Src="/img/Logo.svg"/>
+    <MudSpacer />
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+</MudAppBar>
+
+<MudContainer Fixed=true Class="contain-home d-flex flex-column justify-center align-center gap-4" >
+    <MudPaper Class="contain d-flex flex-row justify-center align-center" MinHeight="250px" Width="100%">
+        <MudPaper Class="d-flex flex-row justify-center flex-wrap align-center relative" MaxWidth="200px">
+            <MudImage Src="/img/Rectangle (1).svg" Class="absolute first-image"></MudImage>
+            <MudImage Src="/img/Rectangle.svg" Class="relative"></MudImage>
+        </MudPaper>
+        <MudText Typo="Typo.h3" Class="h4"> Comenzá hoy a invertir </MudText>
+    
+    </MudPaper>
+
+    <MudButton Variant="Variant.Filled" Class="button-app rounded-pill px-3 py-2">DESCARGA LA APP</MudButton>
+
+    <MudContainer Fixed=false Class="d-flex justify-center flex-column align-center gap-4">
+        <MudPaper Class="ma-2 card-box-shadow" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/IconCelu.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Conoce nuestra App</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+        
+        <MudPaper Class="ma-2 card-box-shadow" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/tarjeta.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Emisión de tu tarjeta Visa</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+        <MudPaper Class="ma-2 card-box-shadow" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/pagos.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Gestión de pagos</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+        <MudPaper Class="ma-2 card-box-shadow" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
+            <MudImage Class="ps-4" Src="/img/compras.png" Alt="icono celular" />
+            <MudText Align="Align.Center" Typo="Typo.h3">Compras</MudText>
+            <MudPaper Class="d-flex justify-end flex-end align-center">
+                <MudNavLink Class="nav-link"><span class="custom-text">Ver más ></span></MudNavLink>
+            </MudPaper>
+        </MudPaper>
+
+    </MudContainer>
+    <MudPaper Class="background-section" MinWidth="100%" MinHeight="30vh">
+        <MudText Class="mt-6 h4" Typo="Typo.h3"  Align="Align.Center">Activa tu billetera por 90 días</MudText>
+    </MudPaper>
+
+    <MudContainer>
+        <MudText>Beneficios</MudText>
+        <MudList>
+            <MudListItem > 
+                <MudIcon Class="icon-list" Icon="@Icons.Material.Filled.CheckCircleOutline" Title="Favorite" Color="Color.Error" Size="Size.Small" />
+                Switch transaccional 
+            </MudListItem>
+            <MudListItem> 
+                <MudIcon Class="icon-list" Icon="@Icons.Material.Filled.CheckCircleOutline" Title="Favorite" Color="Color.Error" Size="Size.Small" />
+                Convergencia de Negocios 
+            </MudListItem>
+            <MudListItem> 
+                <MudIcon Class="icon-list" Icon="@Icons.Material.Filled.CheckCircleOutline" Title="Favorite" Color="Color.Error" Size="Size.Small" />
+                Múltiples módulos 
+            </MudListItem>
+            <MudListItem> 
+                <MudIcon Class="icon-list" Icon="@Icons.Material.Filled.CheckCircleOutline" Title="Favorite" Color="Color.Error" Size="Size.Small" />
+                Integración con distintas tecnologias 
+            </MudListItem>
+            <MudListItem> 
+                <MudIcon Class="icon-list" Icon="@Icons.Material.Filled.CheckCircleOutline" Title="Favorite" Color="Color.Error" Size="Size.Small" />
+                Medios de pago
+            </MudListItem>
+        </MudList>
+
+        <MudPaper Width="100%" Class="mt-10 d-flex flex-wrap align-center relative">
+            <div class="esfere top absolute">
+
+            </div>
+            <div class="esfere bottom absolute">
+            </div>
+            <MudImage Src="/img/Tarj.png" Class="z-2 relative"  Style="width:70%" />
+
+        </MudPaper>
+    </MudContainer>
+</MudContainer>
+
+<MudContainer Class="contain-home footer mt-15 d-flex flex-row flex-wrap justify-space-around align-center">
+    <MudPaper Width="40%">
+        <MudImage Alt="Logo" Fluid=false Width="80" Src="/img/Logo-white.svg" />
+
+    </MudPaper>
+    <MudPaper Class="d-flex flex-wrap flex-column gap-5">
+        <MudPaper Class="d-flex flex-row flex-wrap justify-start align-center">
+            <MudImage Width="24" Src="/img/icons/PlayStore.svg" />
+            <MudText Class="text-app">Google Play</MudText>
+        </MudPaper>
+        <MudPaper Class="d-flex flex-row flex-wrap justify-start align-center">
+            <MudImage Width="24" Src="/img/icons/Apple.svg" />
+            <MudText Class="text-app">App Store</MudText>
+        </MudPaper>
+        <MudPaper  Class="d-flex flex-row flex-wrap justify-center align-center gap-1">
+            <MudImage Width="15" Src="/img/icons/Facebook.svg" />
+            <MudImage Width="15" Src="/img/icons/Linkdin.svg" />
+            <MudImage Width="15" Src="/img/icons/Tiktok.svg" />
+            <MudImage Width="18" Src="/img/icons/Instagram.svg" />
+            <MudImage Width="18" Src="/img/icons/Youtube.svg" />
+            <MudImage Width="18" Src="/img/icons/Twiter.svg" />
+        </MudPaper>
+    </MudPaper>
+</MudContainer>
+
+
+
+
+@code {
+    
+}
