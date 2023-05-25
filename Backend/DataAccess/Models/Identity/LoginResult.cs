@@ -1,4 +1,6 @@
-﻿public class LoginResult
+﻿namespace DataAccess.Models.Identity;
+
+public class LoginResult
 {
     public bool Successful { get; set; }
     public string Error { get; set; }

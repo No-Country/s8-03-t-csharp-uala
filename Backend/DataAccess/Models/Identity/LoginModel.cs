@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
+namespace DataAccess.Models.Identity;
+
 public class LoginModel
 {
     [Required]
@@ -8,4 +11,3 @@ public class LoginModel
     public string Password { get; set; }
 
 }
-

@@ -1,4 +1,4 @@
-﻿namespace CustomApi.Models.Identity
+﻿namespace DataAccess.Models.Identity
 {
     public static class UserRoles
     {
