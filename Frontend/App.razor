@@ -1,5 +1,4 @@
-﻿@using UalaSelecionado8.Pages;
-@*@inject IAuthService AuthService
+﻿@inject NavigationManager NavigationManager
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
@@ -7,7 +6,7 @@
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
-                        <RedirectToLogin/>
+                        NavigationManager.NavigateTo("/Login");
                     }
                     else
                     {
@@ -44,17 +43,3 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
-
-
-@code
-{
-    protected override async Task OnInitializedAsync()
-    {
-        await AuthService.CheckForExpiry();
-    }
-}*@
-<Home></Home>
-
-@code {
-
-}

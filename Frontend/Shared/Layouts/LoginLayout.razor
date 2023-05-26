@@ -1,18 +1,19 @@
-﻿@inherits LayoutComponentBase
+﻿@using UalaSelecionado8.Theme
+@inherits LayoutComponentBase
 
 
 <MudThemeProvider Theme="_currentTheme" />
 <MudSnackbarProvider />
 <style>
     html, body{
-        background:linear-gradient(rgba(112,182,235,0.85),rgba(28,122,192,0.85));
+        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
     }
 </style>
 <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center" Style="height: 100vh;">
     <div class="d-flex flex-column mud-width-full">
         <MudPaper Elevation="25" Class="pa-8 justify-center rounded-lg"  Width="100%" MaxWidth="500px">
             <div class="d-flex justify-center">
-                <MudImage ObjectPosition="ObjectPosition.Center" Style="width: 100%;" Src="" />
+                <MudImage ObjectPosition="ObjectPosition.Center" Style="width: 100%;" Src="img/Logo.png" />
             </div>
             @Body
         </MudPaper>
@@ -20,5 +21,5 @@
 </MudContainer>
 
 @code {
-    private MudTheme _currentTheme = new MudBlazorAdminDashboard();
+    private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
 }

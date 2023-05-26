@@ -1,82 +1,69 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text.Json;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using UalaSelecionado8.Services.Api;
+
+namespace UalaSelecionado8;
 
 internal class AuthStateProvider : AuthenticationStateProvider
 {
-    private ILocalStorageService _localStorage;
-    public AuthStateProvider(ILocalStorageService localStorage)
+    private readonly ILocalStorageService _localStorage;
+    private readonly AuthenticatedHttpClient _client;
+    public AuthStateProvider(ILocalStorageService localStorage, AuthenticatedHttpClient client)
     {
         _localStorage = localStorage;
+        _client = client;
     }
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         var savedToken = await _localStorage.GetItemAsync<string>("authToken");
-
         if (string.IsNullOrWhiteSpace(savedToken))
         {
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
-
         await _localStorage.SetItemAsync("authToken", savedToken);
-
-        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt")));
+        var identity = ParseClaimsFromJwt(savedToken);
+        var exp = identity.Claims.Where(a => a.Type == "exp").Select(c => c.Value).SingleOrDefault();
+        if (exp != null)
+        {
+            var time = int.Parse(exp);
+            var expiredTime = DateTimeOffset.FromUnixTimeSeconds(time).DateTime;
+            if (expiredTime < DateTime.UtcNow)
+            {
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            }
+        }
+        await _client.SetDefaultRequestHeaders();
+        return new AuthenticationState(new ClaimsPrincipal(identity));
     }
 
-    public void MarkUserAsAuthenticated(string email)
+    public async Task MarkUserAsAuthenticated()
     {
-        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "apiauth"));
-        var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+        await _client.SetDefaultRequestHeaders();
+        var savedToken = await _localStorage.GetItemAsync<string>("authToken");
+        var authState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(ParseClaimsFromJwt(savedToken))));
         NotifyAuthenticationStateChanged(authState);
     }
 
     public void MarkUserAsLoggedOut()
     {
-        var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
-        var authState = Task.FromResult(new AuthenticationState(anonymousUser));
-        NotifyAuthenticationStateChanged(authState);
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))));
     }
-
-    private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+    private static ClaimsIdentity ParseClaimsFromJwt(string jwtToken)
     {
         var claims = new List<Claim>();
-        var payload = jwt.Split('.')[1];
-        var jsonBytes = ParseBase64WithoutPadding(payload);
-        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes)!;
-
-        keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
-
-        if (roles != null)
+        var tokenHandler = new JwtSecurityTokenHandler();
+        try
         {
-            if (roles.ToString()!.Trim().StartsWith("["))
-            {
-                var parsedRoles = JsonSerializer.Deserialize<string[]>(roles.ToString()!);
-
-                foreach (var parsedRole in parsedRoles)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, parsedRole));
-                }
-            }
-            else
-            {
-                claims.Add(new Claim(ClaimTypes.Role, roles.ToString()!));
-            }
-
-            keyValuePairs.Remove(ClaimTypes.Role);
+            var claimsPrincipal = tokenHandler.ReadJwtToken(jwtToken);
+            var identity = new ClaimsIdentity(claimsPrincipal.Claims, "jwt");
+            return identity;
         }
-
-        claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()!)));
-
-        return claims;
-    }
-    private byte[] ParseBase64WithoutPadding(string base64)
-    {
-        switch (base64.Length % 4)
+        catch (Exception)
         {
-            case 2: base64 += "=="; break;
-            case 3: base64 += "="; break;
+            return new ClaimsIdentity();
         }
-        return Convert.FromBase64String(base64);
     }
+
 }

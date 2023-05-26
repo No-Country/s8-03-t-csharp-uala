@@ -1,0 +1,49 @@
+﻿@using UalaSelecionado8.Theme
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject IAuthService AuthService
+<MudThemeProvider IsDarkMode="_isDarkMode" Theme="_currentTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Color="Color.Primary" Fixed="false" Elevation="0">
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudLink Href="/"><MudImage Alt="Logo" Src="/img/Logo.svg" /></MudLink>
+        </MudHidden>
+        <MudSpacer />
+        <AuthorizeView>
+            <Authorized>
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" OnClick="@((e) => DrawerToggle())" />
+            </Authorized>
+            <NotAuthorized>
+                <MudButton Variant="Variant.Filled"  Style="Color:black;background-color:white" OnClick="@(() => NavigationManager.NavigateTo("Login"))">Login</MudButton>
+            </NotAuthorized>
+        </AuthorizeView>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Anchor="Anchor.End" Variant="DrawerVariant.Temporary" Elevation="2">
+        <PersonCard></PersonCard>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer Fixed="false" MaxWidth="MaxWidth.False">
+            @Body
+        </MudContainer>
+
+    </MudMainContent>
+</MudLayout>
+
+
+@code {
+    private bool _isDarkMode;
+    bool _drawerOpen = false;
+    private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    public async Task Logout()
+    {
+        await AuthService.Logout();
+        NavigationManager.NavigateTo("/");
+    }
+}

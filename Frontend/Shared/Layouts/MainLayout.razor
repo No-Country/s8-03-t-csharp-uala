@@ -1,11 +1,12 @@
-﻿@inherits LayoutComponentBase
+﻿@using UalaSelecionado8.Theme
+@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject IAuthService AuthService
-<MudThemeProvider IsDarkMode=_isDarkMode Theme="_currentTheme" />
+<MudThemeProvider IsDarkMode="_isDarkMode" Theme="_currentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-@*<MudLayout>
+<MudLayout>
     <MudAppBar Elevation="3">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
   <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
@@ -58,11 +59,11 @@
         </MudContainer>
 
     </MudMainContent>
-</MudLayout>*@
+</MudLayout>
 @code {
     private bool _isDarkMode;
     bool _drawerOpen = true;
-    private MudTheme _currentTheme = new MudBlazorAdminDashboard();
+    private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;

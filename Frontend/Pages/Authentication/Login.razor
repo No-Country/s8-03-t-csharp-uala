@@ -1,0 +1,60 @@
+﻿@page "/Login"
+@inject NavigationManager NavigationManager
+@inject IAuthService AuthService
+@inject ISnackbar Snackbar
+@layout LoginLayout
+
+<PageTitle>Login</PageTitle>
+<div class="d-flex justify-center">
+    <MudText>Enter your login credentials below</MudText>
+</div>
+<MudTextField T="string" @bind-Value="@_loginModel.Email" Label="E-mail" Variant="Variant.Outlined" Class="my-6"></MudTextField>
+<MudTextField @bind-Value="@_loginModel.Password" Label="Password" Variant="Variant.Outlined" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
+<div Class="d-flex justify-end align-center my-4">    
+    <MudLink  Href="/ForgotPassword">Forgot your password?</MudLink>
+</div>
+<MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="HandleLogin" Size="Size.Large" FullWidth="true">Sign In</MudButton>
+<div Class="d-flex justify-center">
+    <MudText Class="mt-4" Color="MudBlazor.Color.Dark" Typo="Typo.subtitle1">Custom Company, 2022.</MudText>
+</div>
+@code {
+    bool _passwordVisibility;
+    InputType _passwordInput = InputType.Password;
+    string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    void TogglePasswordVisibility()
+    {
+        @if (_passwordVisibility)
+        {
+            _passwordVisibility = false;
+            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            _passwordInput = InputType.Password;
+        }
+        else
+        {
+            _passwordVisibility = true;
+            _passwordInputIcon = Icons.Material.Filled.Visibility;
+            _passwordInput = InputType.Text;
+        }
+    }
+
+    private readonly LoginModel _loginModel = new LoginModel();
+
+
+    private async Task HandleLogin()
+    {
+        var result = await AuthService.Login(_loginModel);
+
+        if (result.Successful)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            var error = result.Error;
+            Snackbar.Add(error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
+        }
+    }
+
+
+}

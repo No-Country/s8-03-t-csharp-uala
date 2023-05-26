@@ -1,0 +1,41 @@
+﻿@page "/Register"
+@layout LoginLayout
+@inject IComplyCubeService _client
+<MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
+@if (Loading)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <ComplyCube Token="@Token" OnComplete="HandleVerificationComplete" />
+}
+
+@code
+{
+    private bool Loading { get; set; } = true;
+    private string? Token { get; set; } = "";
+    protected override async Task OnInitializedAsync()
+    {
+        var newClient = new
+        {
+            type = "person",
+            email = "john@doe.com",
+            personDetails = new
+            {
+                firstName = "John",
+                lastName = "Doe",
+                dob = "1990-01-01"
+            }
+        };
+        var user = await _client.CreateClient(newClient);
+        var sdkToken = await _client.GenerateToken(user.Id);
+        Token = sdkToken.Token;
+        Loading = false;
+    }
+
+    private static void HandleVerificationComplete()
+    {
+        
+    }
+}

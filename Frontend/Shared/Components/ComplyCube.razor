@@ -1,0 +1,26 @@
+﻿@inject IJSRuntime JsRuntime
+<div id="complycube-mount"></div>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="StartVerification">
+    Start verification
+</MudButton>
+
+
+@code 
+{
+    [Parameter]
+    public string? Token { get; set; }
+
+    [Parameter]
+    public EventCallback OnComplete { get; set; }
+
+    private async Task StartVerification()
+    {
+        await JsRuntime.InvokeVoidAsync("startVerification", DotNetObjectReference.Create(this), Token);
+    }
+
+    [JSInvokable]
+    public async Task VerificationComplete()
+    {
+        await OnComplete.InvokeAsync();
+    }
+}

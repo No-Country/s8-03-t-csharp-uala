@@ -9,10 +9,10 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="UalaSelecionado8.styles.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <link rel="stylesheet" href="https://assets.complycube.com/web-sdk/v1/style.css" />
 </head>
 
 <body>
@@ -35,31 +35,28 @@
             position: fixed;
             right: -50%;
             top: 0;
-            z-index: -1
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            max-height: 20%;
-            margin: auto;
+            z-index: -1;
         }
 
         .fsh-wasm-cont {
             display: flex;
-            margin: auto;
-            width: 100%;
-            height: 100%;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
+
+            .fsh-wasm-cont img {
+                max-width: 100%;
+                height: auto;
+                max-height: 100%;
+            }
     </style>
     <div id="app">
-        <div style="height:100%;width:100%;margin:0;position:fixed;">
-            <div class="fsh-wasm"></div>
-            <div class="fsh-wasm" style="animation-direction:alternate-reverse;animation-duration:2s;"></div>
-            <div class="fsh-wasm" style="animation-duration:5s;"></div>
-            <div class="fsh-wasm-cont ">
-                <img src="" />
-            </div>
+        <div class="fsh-wasm"></div>
+        <div class="fsh-wasm" style="animation-direction: alternate-reverse; animation-duration: 2s;"></div>
+        <div class="fsh-wasm" style="animation-duration: 5s;"></div>
+        <div class="fsh-wasm-cont">
+            <img src="img/Alau.png" alt="logo" />
         </div>
     </div>
 
@@ -71,14 +68,16 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script>
-        var primaryColor = '#424a4a';
-        var baseColor = '#3088c7';
+        var primaryColor = '#FF6766';
+        var baseColor = 'white';
         var elements = document.getElementsByClassName('fsh-wasm');
         for (var i = 0; i < elements.length; i++) {
             elements[i].style.backgroundImage = 'linear-gradient(-120deg,' + primaryColor + ' 50%,' + baseColor + ' 50%)';
         }
     </script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script src="https://assets.complycube.com/web-sdk/v1/complycube.min.js" async defer></script>
+    <script defer src="js/complycube.js"></script>
 </body>
 
 </html>
