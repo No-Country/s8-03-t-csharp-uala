@@ -1,31 +1,23 @@
 name: Trigger auto deployment for selecionadouala
-
-# When this action will be executed
 on:
-  # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ main ]
+    branches:
+    - main
     paths:
     - 'Backend/**'
     - '.github/workflows/selecionadouala.yml'
-
-  # Allow mannually trigger 
-  workflow_dispatch:
-      
+  workflow_dispatch:      
 jobs:
   build-and-deploy:
+    name: Build and Deploy Job
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout to the branch
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v3
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.SELECIONADOUALA_AZURE_CREDENTIALS }}
-
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v1
         with:
