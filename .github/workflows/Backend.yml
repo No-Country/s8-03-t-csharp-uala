@@ -1,11 +1,11 @@
-name: Trigger auto deployment for selecionadouala
+name: Build and Deploy Backend to Azure Container Apps
 on:
   push:
     branches:
     - main
     paths:
     - 'Backend/**'
-    - '.github/workflows/selecionadouala.yml'
+    - '.github/workflows/Backend.yml'
   workflow_dispatch:      
 jobs:
   build-and-deploy:

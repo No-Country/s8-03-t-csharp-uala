@@ -1,15 +1,15 @@
-name: Build and deploy Frontend to Netlify
+name: Build and Deploy Frontend to Netlify
 on:
   push:
     branches:
     - main
     paths:
     - 'Frontend/**'
-    - '.github/workflows/Netlify-Deploy.yml'
+    - '.github/workflows/Frontend.yml'
   workflow_dispatch:  
 jobs:
   build:
-    name: Build and Deploy Job
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,6 +26,11 @@ jobs:
       - name: Publish
         run: dotnet publish -c Release -o release
         working-directory: Frontend
+  deploy:
+    name: Deploy to Netlify
+    needs: build    
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
@@ -34,7 +39,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
           production-deploy: true
-          netlify-config-path: Frontend/netlify.toml
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
