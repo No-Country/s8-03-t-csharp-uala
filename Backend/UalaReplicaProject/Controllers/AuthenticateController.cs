@@ -104,7 +104,7 @@ public class AuthenticateController : ControllerBase
         return Ok(new { Status = "Success", Message = "User created successfully!" });
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("GenerateToken/{id}")]
     public async Task<IActionResult> GenerateToken(string id)
     {
         var ccClient = new ComplyCubeClient("test_d2o3U25DeXNEZUVvbUs2cWg6NzkwYThkNzU5NWUzOTM1MGMwZTYwZDJiM2MxNTk3OWYwOTEzYmIzN2EwNWQ2ZjQ0ZjgxYWEyNTQ1MTQ3MDUwMQ==",new HttpClient(), new HttpClientHandler());
