@@ -6,6 +6,7 @@ on:
     paths:
     - 'Frontend/**'
     - '.github/workflows/Netlify-Deploy.yml'
+  workflow_dispatch:  
 jobs:
   build:
     name: Build and Deploy Job
@@ -29,6 +30,9 @@ jobs:
         uses: nwtgck/actions-netlify@v2.0
         with:
           publish-dir: Frontend/release/wwwroot
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"          
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
