@@ -26,11 +26,6 @@ jobs:
       - name: Publish
         run: dotnet publish -c Release -o release
         working-directory: Frontend
-  deploy:
-    name: Deploy to Netlify
-    needs: build    
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
