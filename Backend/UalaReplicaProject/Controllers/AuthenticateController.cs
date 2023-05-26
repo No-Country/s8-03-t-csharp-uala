@@ -5,6 +5,7 @@ using ComplyCube.Net;
 using ComplyCube.Net.Resources.Clients;
 using ComplyCube.Net.Resources.SDKTokens;
 using CustomApi.Models.Identity;
+using DataAccess.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +16,11 @@ namespace UalaReplicaProject.Controllers;
 [ApiController]
 public class AuthenticateController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
 
-    public AuthenticateController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+    public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -73,7 +74,7 @@ public class AuthenticateController : ControllerBase
         if (userExists != null)
             return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User already exists!" });
 
-        IdentityUser user = new IdentityUser()
+        var user = new ApplicationUser
         {
             Email = model.Email,
             SecurityStamp = Guid.NewGuid().ToString(),
@@ -109,15 +110,8 @@ public class AuthenticateController : ControllerBase
     public async Task<IActionResult> GenerateToken(string id)
     {
         var ccClient = new ComplyCubeClient("test_d2o3U25DeXNEZUVvbUs2cWg6NzkwYThkNzU5NWUzOTM1MGMwZTYwZDJiM2MxNTk3OWYwOTEzYmIzN2EwNWQ2ZjQ0ZjgxYWEyNTQ1MTQ3MDUwMQ==",new HttpClient(), new HttpClientHandler());
-
-        var clientApi = new ClientApi(ccClient);
-
-        var clients = await clientApi.ListAsync();
-
         var sdkTokenApi = new SDKTokenApi(ccClient);
-
         var sdkTokenRequest = new SDKTokenRequest { clientId = id, referrer = "*://*/*" };
-
         var sdkToken = await sdkTokenApi.GenerateToken(sdkTokenRequest);
         return Ok(sdkToken.token);
     }

@@ -143,7 +143,7 @@ namespace Services
             var response = _accountRepository.UpdateAccount(account);
             var dto = response.ToAccountDTO();
 
-            var rpta = new ResponseDTO()
+            var rpta = new ResponseDTO
             {
                 Success = true,
                 Result = dto,
