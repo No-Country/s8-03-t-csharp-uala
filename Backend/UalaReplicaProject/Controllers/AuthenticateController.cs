@@ -115,7 +115,7 @@ public class AuthenticateController : ControllerBase
 
         var sdkTokenApi = new SDKTokenApi(ccClient);
 
-        var sdkTokenRequest = new SDKTokenRequest { clientId = id, referrer = "*://**" };
+        var sdkTokenRequest = new SDKTokenRequest { clientId = id, referrer = "*://*/*" };
 
         var sdkToken = await sdkTokenApi.GenerateToken(sdkTokenRequest);
         return Ok(sdkToken.token);
