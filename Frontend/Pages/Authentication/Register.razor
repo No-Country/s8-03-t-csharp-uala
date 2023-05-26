@@ -14,23 +14,10 @@ else
 @code
 {
     private bool Loading { get; set; } = true;
-    private string? Token { get; set; } = "";
+    private string Token { get; set; } = "";
     protected override async Task OnInitializedAsync()
     {
-        var newClient = new
-        {
-            type = "person",
-            email = "john@doe.com",
-            personDetails = new
-            {
-                firstName = "John",
-                lastName = "Doe",
-                dob = "1990-01-01"
-            }
-        };
-        var user = await _client.CreateClient(newClient);
-        var sdkToken = await _client.GenerateToken(user.Id);
-        Token = sdkToken.Token;
+        Token = await _client.GenerateToken("645d458de2579100086856d0");
         Loading = false;
     }
 

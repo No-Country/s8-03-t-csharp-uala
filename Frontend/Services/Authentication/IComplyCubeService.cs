@@ -2,6 +2,5 @@
 
 internal interface IComplyCubeService
 {
-    Task<ClientResult> CreateClient(object req);
-    Task<SdkTokenResult> GenerateToken(string req);
+    Task<string> GenerateToken(string req);
 }

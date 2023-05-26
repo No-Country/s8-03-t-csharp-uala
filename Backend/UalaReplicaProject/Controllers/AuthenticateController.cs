@@ -6,6 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ComplyCube.Net;
+using ComplyCube.Net.Model;
+using ComplyCube.Net.Resources.Clients;
+using ComplyCube.Net.Resources.SDKTokens;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -100,6 +104,22 @@ public class AuthenticateController : ControllerBase
         return Ok(new { Status = "Success", Message = "User created successfully!" });
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GenerateToken(string id)
+    {
+        var ccClient = new ComplyCubeClient("test_d2o3U25DeXNEZUVvbUs2cWg6NzkwYThkNzU5NWUzOTM1MGMwZTYwZDJiM2MxNTk3OWYwOTEzYmIzN2EwNWQ2ZjQ0ZjgxYWEyNTQ1MTQ3MDUwMQ==",new HttpClient(), new HttpClientHandler());
+
+        var clientApi = new ClientApi(ccClient);
+
+        var clients = await clientApi.ListAsync();
+
+        var sdkTokenApi = new SDKTokenApi(ccClient);
+
+        var sdkTokenRequest = new SDKTokenRequest { clientId = id, referrer = "*://*/*" };
+
+        var sdkToken = await sdkTokenApi.GenerateToken(sdkTokenRequest);
+        return Ok(sdkToken.token);
+    }
 }
 
 
