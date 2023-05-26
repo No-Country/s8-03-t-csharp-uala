@@ -11,8 +11,8 @@ internal class ComplyCubeService  : IComplyCubeService
 
     public async Task<string> GenerateToken(string req)
     {
-        var response = await Client.GetAsync($"api/Authenticate/GenerateToken/{req}");
-        var result = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync())!;
+        var response = await Client.GetAsync($"https://selecionadouala.wittyflower-4fe05e2c.southcentralus.azurecontainerapps.io/api/Authenticate/GenerateToken/{req}");
+        var result = await response.Content.ReadAsStringAsync()!;
         return result;
     }
 }
