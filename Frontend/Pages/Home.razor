@@ -1,17 +1,17 @@
 ﻿@page "/"
 @layout HomeLayout
+<PageTitle>Alau - Inicio</PageTitle>
 
-
-<MudGrid>
-    <MudItem xs="12">
-
-        <MudImage Src="/img/Rectangle (1).svg" Class="absolute first-image"></MudImage>
-        <MudImage Src="/img/Rectangle.svg" Class="relative"></MudImage>
-
+<div style="height:75vh;background-color:red;">
+    <MudStack Justify="Justify.Center" Style="width:100%" AlignItems="AlignItems.Center" Row="true">
+        <MudImage Style="width:100%: height:50%" Src="/img/HeroImg.png"></MudImage>
         <MudText Typo="Typo.h3" Class="h4"> Comenzá hoy a invertir </MudText>
+    </MudStack>
+    <MudStack Justify="Justify.Center">
         <MudButton Variant="Variant.Filled" Class="button-app rounded-pill px-3 py-2">DESCARGA LA APP</MudButton>
-    </MudItem>
-</MudGrid>
+    </MudStack>
+</div>
+
 <MudPaper Class="ma-2 card-box-shadow" Elevation="3" Width="80%" MinWidth="200px" MaxWidth="400px">
     <MudImage Class="ps-4" Src="/img/IconCelu.png" Alt="icono celular" />
     <MudText Align="Align.Center" Typo="Typo.h3">Conoce nuestra App</MudText>
