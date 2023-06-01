@@ -7,7 +7,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Color="Color.Primary" Fixed="false" Elevation="0">
+    <MudAppBar Color="Color.Primary" Fixed="true" Elevation="0">
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudLink Href="/"><MudImage Alt="Logo" Src="/img/Logo.svg" /></MudLink>
         </MudHidden>
@@ -24,7 +24,7 @@
     <MudDrawer @bind-Open="_drawerOpen" Anchor="Anchor.End" Variant="DrawerVariant.Temporary" Elevation="2">
         <PersonCard></PersonCard>
     </MudDrawer>
-    <MudMainContent>
+    <MudMainContent >
         @Body
     </MudMainContent>
 </MudLayout>
