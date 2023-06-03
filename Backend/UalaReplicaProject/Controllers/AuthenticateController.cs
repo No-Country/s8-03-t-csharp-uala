@@ -109,7 +109,7 @@ public class AuthenticateController : ControllerBase
     [HttpGet("GenerateToken/{id}")]
     public async Task<IActionResult> GenerateToken(string id)
     {
-        var ccClient = new ComplyCubeClient("test_d2o3U25DeXNEZUVvbUs2cWg6NzkwYThkNzU5NWUzOTM1MGMwZTYwZDJiM2MxNTk3OWYwOTEzYmIzN2EwNWQ2ZjQ0ZjgxYWEyNTQ1MTQ3MDUwMQ==",new HttpClient(), new HttpClientHandler());
+        var ccClient = new ComplyCubeClient("test_d2o3U25DeXNEZUVvbUs2cWg6NzkwYThkNzU5NWUzOTM1MGMwZTYwZDJiM2MxNTk3OWYwOTEzYmIzN2EwNWQ2ZjQ0ZjgxYWEyNTQ1MTQ3MDUwMQ==", new HttpClient(), new HttpClientHandler());
         var sdkTokenApi = new SDKTokenApi(ccClient);
         var sdkTokenRequest = new SDKTokenRequest { clientId = id, referrer = "*://*/*" };
         var sdkToken = await sdkTokenApi.GenerateToken(sdkTokenRequest);
