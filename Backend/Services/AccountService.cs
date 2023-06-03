@@ -16,51 +16,7 @@ namespace Services
             _accountRepository = accountRepository;
         }
 
-        //public async Task<ResponseDTO> GetAllTransactionsByAccountId(Guid id)
-        //{
-        //    var transactions = await _transactionRepository.GetAllTransactionsByAccountId(id);
-
-        //    if (transactions == null)
-        //    {
-        //        return new ResponseDTO
-        //        {
-        //            Success = false,
-        //            Result = null,
-        //            Message = "No transactions found for the specified account ID",
-        //            StatusCode = 404
-        //        };
-        //    }
-
-        //    var transactionDTOs = new List<TransactionDTO>();
-
-        //    foreach (var transaction in transactions)
-        //    {
-        //        var transactionDTO = new TransactionDTO
-        //        {
-        //            Id = transaction.Id,
-        //            Date = transaction.Date,
-        //            Amount = transaction.Amount,
-        //            Motive = transaction.Motive,
-        //            Reference = transaction.Reference,
-        //            SourceAccountId = transaction.SourceAccountId,
-        //            DestinationAccountId = transaction.DestinationAccountId
-        //        };
-
-        //        transactionDTOs.Add(transactionDTO);
-        //    }
-
-        //    var response = new ResponseDTO
-        //    {
-        //        Success = true,
-        //        Result = transactionDTOs,
-        //        Message = "Transactions successfully retrieved",
-        //        StatusCode = 200
-        //    };
-
-        //    return response;
-        //}
-
-
+      
         public async Task<ResponseDTO> GetAccountById(Guid id)
         {
             var account = await _accountRepository.GetAccountById(id);
@@ -71,7 +27,7 @@ namespace Services
                 {
                     Success = false,
                     Result = null,
-                    Message = "Transaction not found",
+                    Message = "Account not found",
                     StatusCode = 404
                 };
             }
@@ -83,7 +39,6 @@ namespace Services
                 {
                     Id = account.Id,
                     AccountNumber = account.AccountNumber,
-                    //ICollection <Transaction> Transactions=,
                     Url_ProfilePicture = account.Url_ProfilePicture,
                     Balance = account.Balance,
                     InvestedBalance = account.InvestedBalance,
@@ -104,7 +59,6 @@ namespace Services
             {
                 Id = Guid.NewGuid(),
                 AccountNumber = createAccountDTO.AccountNumber,
-                //ICollection <Transaction> Transactions=,
                 Url_ProfilePicture= createAccountDTO.Url_ProfilePicture,
                 Balance = createAccountDTO.Balance,
                 InvestedBalance = createAccountDTO.InvestedBalance,
@@ -122,7 +76,6 @@ namespace Services
                 {
                     Id = account.Id,
                     AccountNumber = account.AccountNumber,
-                    //ICollection <Transaction> Transactions=,
                     Url_ProfilePicture = account.Url_ProfilePicture,
                     Balance = account.Balance,
                     InvestedBalance = account.InvestedBalance,
@@ -153,5 +106,114 @@ namespace Services
 
             return rpta;
         }
+
+        public async Task<ResponseDTO> TransferBalanceToInvestedBalance(Guid id, decimal amount)
+        {
+            var account = await _accountRepository.GetAccountById(id);
+
+            if (account == null)
+            {
+                return new ResponseDTO
+                {
+                    Success = false,
+                    Result = null,
+                    Message = "Account not found",
+                    StatusCode = 404
+                };
+            }
+
+            if (account.Balance < amount)
+            {
+                return new ResponseDTO
+                {
+                    Success = false,
+                    Result = null,
+                    Message = "Insufficient balance",
+                    StatusCode = 400
+                };
+            }
+
+            account.Balance -= amount;
+            account.InvestedBalance += amount;
+
+            await _accountRepository.UpdateAccount(account);
+
+            var response = new ResponseDTO
+            {
+                Success = true,
+                Result = new AccountDTO
+                {
+                    Id = account.Id,
+                    AccountNumber = account.AccountNumber,
+                    Url_ProfilePicture = account.Url_ProfilePicture,
+                    Balance = account.Balance,
+                    InvestedBalance = account.InvestedBalance,
+                    CVU = account.CVU,
+                    Alias = account.Alias,
+                    OwnerId = account.OwnerId
+                },
+                Message = "Balance transferred to InvestedBalance successfully",
+                StatusCode = 200
+            };
+
+            return response;
+        }
+
+        public async Task<ResponseDTO> WithdrawInvestedBalance(Guid id, decimal amount)
+        {
+            var account = await _accountRepository.GetAccountById(id);
+
+            if (account == null)
+            {
+                return new ResponseDTO
+                {
+                    Success = false,
+                    Result = null,
+                    Message = "Account not found",
+                    StatusCode = 404
+                };
+            }
+
+            if (account.InvestedBalance < amount)
+            {
+                return new ResponseDTO
+                {
+                    Success = false,
+                    Result = null,
+                    Message = "Insufficient invested balance",
+                    StatusCode = 400
+                };
+            }
+
+            account.Balance += amount;
+            account.InvestedBalance -= amount;
+
+            await _accountRepository.UpdateAccount(account);
+
+            var response = new ResponseDTO
+            {
+                Success = true,
+                Result = new AccountDTO
+                {
+                    Id = account.Id,
+                    AccountNumber = account.AccountNumber,
+                    Url_ProfilePicture = account.Url_ProfilePicture,
+                    Balance = account.Balance,
+                    InvestedBalance = account.InvestedBalance,
+                    CVU = account.CVU,
+                    Alias = account.Alias,
+                    OwnerId = account.OwnerId
+                },
+                Message = "InvestedBalance withdrawn and returned to Balance successfully",
+                StatusCode = 200
+            };
+
+            return response;
+        }
+
+
+
+
+
     }
 }

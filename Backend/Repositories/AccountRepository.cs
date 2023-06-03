@@ -15,16 +15,6 @@ namespace Repositories
         }
 
 
-        //public async Task<IEnumerable<Account>> GetAllTransactionsByAccountId(Guid accountId)
-        //{
-        //    var transactions = await _context.Transactions
-        //        .Where(t => t.SourceAccountId == accountId || t.DestinationAccountId == accountId)
-        //        .ToListAsync();
-
-        //    return transactions;
-        //}
-
-
         public async Task<Account> GetAccountById(Guid id)
         {
             var account = await _context.Set<Account>()
@@ -41,11 +31,14 @@ namespace Repositories
             return account;
         }
 
-        public Account UpdateAccount(Account account)
+        public async Task<Account> UpdateAccount(Account account)
         {
-            _context.Accounts.Update(account);
-            _context.SaveChangesAsync();
+            _context.Entry(account).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
             return account;
         }
+
+        
     }
 }
