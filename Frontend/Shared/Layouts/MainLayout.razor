@@ -9,46 +9,40 @@
 <MudLayout>
     <MudAppBar Elevation="3">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-  <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-       <MudLink Href=""><MudImage  Src="" /></MudLink>
-  </MudHidden>      
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudLink Href=""><MudImage Src="" /></MudLink>
+        </MudHidden>
         <MudSpacer />
         <MudToggleIconButton @bind-Toggled="_isDarkMode" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode" />
-      <MudMenu AnchorOrigin="Origin.BottomRight" LockScroll="true" TransformOrigin="Origin.TopRight">
-        <ActivatorContent>
-            <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" />
-        </ActivatorContent>
-        <ChildContent>
-            <div style="min-width: 220px">
-                <PersonCard/>
-                    <MudMenuItem Href="/account">
-                    <div class="d-flex">
-                        <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Person" />
-                        <MudText>Account</MudText>
+        <MudMenu AnchorOrigin="Origin.BottomRight" LockScroll="true" TransformOrigin="Origin.TopRight">
+            <ActivatorContent>
+                <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" />
+            </ActivatorContent>
+            <ChildContent>
+                <div style="min-width: 220px">
+                    <PersonCard />
+                    <MudMenuItem Href="/profile">
+                        <div class="d-flex">
+                            <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Person" />
+                            <MudText>Account</MudText>
+                        </div>
+                    </MudMenuItem>
+                    <div class="mt-4 mx-4">
+                        <MudButton Color="Color.Error" FullWidth="true" StartIcon="@Icons.Material.Filled.Logout"
+                                   Variant="Variant.Filled" OnClick="Logout">
+                            Logout
+                        </MudButton>
                     </div>
-                </MudMenuItem>
-                <MudMenuItem Href="/">
-                    <div class="d-flex">
-                        <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Dashboard" />
-                        <MudText>Dashboard</MudText>
-                    </div>
-                </MudMenuItem>
-                <div class="mt-4 mx-4">
-                    <MudButton Color="Color.Error" FullWidth="true" StartIcon="@Icons.Material.Filled.Logout"
-                        Variant="Variant.Filled" OnClick="Logout">
-                        Logout
-                    </MudButton>
                 </div>
-            </div>
-        </ChildContent>
-    </MudMenu>
+            </ChildContent>
+        </MudMenu>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <PersonCard ></PersonCard>
+        <PersonCard></PersonCard>
 
         <MudNavMenu>
             <MudDivider Class="my-2 " />
-            <MudText Typo="Typo.subtitle2" Color="Color.Primary" Class="pb-2  px-4">Inicio</MudText>            
+            <MudText Typo="Typo.subtitle2" Color="Color.Primary" Class="pb-2  px-4">Inicio</MudText>
             <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Factory">Home</MudNavLink>
             <MudNavLink Href="Counter" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Construction">Counter</MudNavLink>
         </MudNavMenu>
