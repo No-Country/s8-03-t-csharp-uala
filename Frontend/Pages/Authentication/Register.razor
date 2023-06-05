@@ -9,32 +9,33 @@
 </MudStack>
 <MudGrid>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Name" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.Name" Label="Nombre" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
         <MudTextField T="string" @bind-Value="@_registerModel.Email" Label="Correo Electrónico" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Username" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.Username" Label="Nombre de usuario" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Password" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.Password" Label="Contraseña" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.ConfirmPassword" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.ConfirmPassword" Label="Confirmar contraseña" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Road" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.Road" Label="Calle" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Province" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.Province" Label="Provincia" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.City" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.City" Label="Ciudad" Variant="Variant.Outlined"/>
     </MudItem>
     <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.ZipCode" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+        <MudTextField T="string" @bind-Value="@_registerModel.ZipCode" Label="Código postal" Variant="Variant.Outlined"/>
     </MudItem>
+
 </MudGrid>
 <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Class="my-4">
     <MudLink Href="/Login">¿Tienes una cuenta?</MudLink>

@@ -319,6 +319,9 @@ namespace DataAccess.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.HasIndex("AddressId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");

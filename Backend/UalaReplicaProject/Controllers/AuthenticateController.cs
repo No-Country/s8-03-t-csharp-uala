@@ -80,7 +80,7 @@ public class AuthenticateController : ControllerBase
             Email = model.Email,
             SecurityStamp = Guid.NewGuid().ToString(),
             UserName = model.Username,
-            Address = 
+            Address = new Address()
             {
                 City = model.City,
                 Province = model.Province,

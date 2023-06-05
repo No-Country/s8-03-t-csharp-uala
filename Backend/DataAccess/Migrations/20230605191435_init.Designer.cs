@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(UalaContext))]
-    [Migration("20230519215804_initialMigration")]
-    partial class initialMigration
+    [Migration("20230605191435_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,9 +89,6 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uuid");
-
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
@@ -111,8 +108,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
 
                     b.ToTable("Transactions");
                 });
@@ -326,6 +321,9 @@ namespace DataAccess.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.HasIndex("AddressId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
@@ -338,13 +336,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ApplicationModels.Transaction", b =>
-                {
-                    b.HasOne("DataAccess.Models.ApplicationModels.Account", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -405,11 +396,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ApplicationModels.Account", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Identity.ApplicationUser", b =>
