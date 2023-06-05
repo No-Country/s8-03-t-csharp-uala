@@ -73,7 +73,7 @@ public class AuthenticateController : ControllerBase
     {
         var userExists = await _userManager.FindByNameAsync(model.Username);
         if (userExists != null)
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User already exists!" });
+            return BadRequest(new { Status = "Error", Message = "User already exists!" });
 
         var user = new ApplicationUser
         {
@@ -101,10 +101,8 @@ public class AuthenticateController : ControllerBase
             }
         };
         var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-        return Ok(new { Status = "Success", Message = "User created successfully!" });    }
+        return Ok(!result.Succeeded ? new { Status = "Error", Message = "User creation failed! Please check user details and try again." } : new { Status = "Success", Message = "User created successfully!" });
+    }
 
     [HttpPost]
     [Route("AddRole")]

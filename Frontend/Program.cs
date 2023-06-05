@@ -21,7 +21,7 @@ builder.Services.AddScoped<IComplyCubeService, ComplyCubeService>();
 builder.Services.AddScoped(sp => new AuthenticatedHttpClient(sp.GetRequiredService<ILocalStorageService>())
 {
     BaseAddress = new Uri("https://selecionadouala.wittyflower-4fe05e2c.southcentralus.azurecontainerapps.io/")
-    //BaseAddress = new Uri("https://localhost:7243/")
+    //BaseAddress = new Uri("https://localhost:7079/")
 });
 builder.Services.AddMudServices();
 var app = builder.Build();

@@ -53,14 +53,13 @@
     private async Task HandleRegister()
     {
         var result = await AuthService.Register(_registerModel);
-        if (result.Successful)
+        if (result.Status is "Success")
         {
             NavigationManager.NavigateTo("/Login");
         }
         else
         {
-            var error = result.Error;
-            Snackbar.Add(error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
+            Snackbar.Add(result.Message, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
         }
     }
 }
