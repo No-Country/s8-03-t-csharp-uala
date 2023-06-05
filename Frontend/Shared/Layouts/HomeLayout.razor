@@ -2,12 +2,12 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject IAuthService AuthService
-<MudThemeProvider IsDarkMode="_isDarkMode" Theme="_currentTheme" />
+<MudThemeProvider @ref="_mudThemeProvider" IsDarkMode="_isDarkMode" Theme="_currentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Color="Color.Primary" Fixed="false" Elevation="0">
+    <MudAppBar Color="Color.Primary" Fixed="true" Elevation="0">
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudLink Href="/"><MudImage Alt="Logo" Src="/img/Logo.svg" /></MudLink>
         </MudHidden>
@@ -24,19 +24,26 @@
     <MudDrawer @bind-Open="_drawerOpen" Anchor="Anchor.End" Variant="DrawerVariant.Temporary" Elevation="2">
         <PersonCard></PersonCard>
     </MudDrawer>
-    <MudMainContent>
-        <MudContainer Fixed="false" MaxWidth="MaxWidth.False">
-            @Body
-        </MudContainer>
-
+    <MudMainContent >
+        @Body
     </MudMainContent>
 </MudLayout>
 
 
 @code {
-    private bool _isDarkMode;
     bool _drawerOpen = false;
     private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
+    private bool _isDarkMode;
+    private MudThemeProvider? _mudThemeProvider;
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
+            StateHasChanged();
+        }
+    }
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
