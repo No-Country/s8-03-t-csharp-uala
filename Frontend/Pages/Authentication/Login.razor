@@ -4,20 +4,42 @@
 @inject ISnackbar Snackbar
 @layout LoginLayout
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Iniciar Sesión</PageTitle>
 <div class="d-flex justify-center">
-    <MudText>Enter your login credentials below</MudText>
+    <MudText>Introduzca sus credenciales de inicio </MudText>
 </div>
-<MudTextField T="string" @bind-Value="@_loginModel.Email" Label="E-mail" Variant="Variant.Outlined" Class="my-6"></MudTextField>
-<MudTextField @bind-Value="@_loginModel.Password" Label="Password" Variant="Variant.Outlined" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
-<div Class="d-flex justify-end align-center my-4">    
-    <MudLink  Href="/ForgotPassword">Forgot your password?</MudLink>
+<MudTextField T="string" @bind-Value="@_loginModel.Email" Label="Correo Electrónico" Variant="Variant.Outlined" Class="my-6"></MudTextField>
+<MudTextField @bind-Value="@_loginModel.Password" Label="Contraseña" Variant="Variant.Outlined" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
+
+<MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="my-4">
+    <MudLink Href="/Registro">¿No tienes una cuenta?</MudLink>
+    <MudLink Href="/RecuperarContraseña">¿Olvidaste tu contraseña?</MudLink>
+</MudStack>
+
+@if (_loading)
+{
+    <div Class="d-flex justify-center align-center">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    </div>
+}
+else
+{
+    <MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="HandleLogin" Size="Size.Large" FullWidth="true">Inicia Sesion</MudButton>
+}
+<div class="d-flex justify-space-around flex-grow-1 my-4 gap-4">
+    <MudButton Class="flex-grow-1" OnClick="@(()=>HandleLogin2("admin@example.com","Test123!"))" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Shield" ButtonType="ButtonType.Submit">
+       Administrador
+    </MudButton>
+    <MudButton Class="flex-grow-1" OnClick="@(()=>HandleLogin2("user2@example.com","Test123!"))" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Person" ButtonType="ButtonType.Reset">
+        Usuario
+    </MudButton>
 </div>
-<MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="HandleLogin" Size="Size.Large" FullWidth="true">Sign In</MudButton>
-<div Class="d-flex justify-center">
-    <MudText Class="mt-4" Color="MudBlazor.Color.Dark" Typo="Typo.subtitle1">Custom Company, 2022.</MudText>
-</div>
+<MudDivider></MudDivider>
+<MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Class="my-4">
+    <MudText Class="my-2" Color="Color.Dark" Typo="Typo.subtitle1">Alau Tecnologias, 2023</MudText>
+</MudStack>
 @code {
+    bool _loading;
     bool _passwordVisibility;
     InputType _passwordInput = InputType.Password;
     string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
@@ -43,17 +65,39 @@
 
     private async Task HandleLogin()
     {
+        _loading = true;
         var result = await AuthService.Login(_loginModel);
-
         if (result.Successful)
         {
             NavigationManager.NavigateTo("/");
         }
         else
         {
+            _loading = false;
             var error = result.Error;
             Snackbar.Add(error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
         }
+    }
+    private async Task HandleLogin2(string u, string p)
+    {
+        _loading = true;
+        LoginModel loginModel = new()
+            {
+                Email = u,
+                Password = p
+            };
+        var result = await AuthService.Login(loginModel);
+        if (result.Successful)
+        {
+            NavigationManager.NavigateTo("/", true);
+        }
+        else
+        {
+            _loading = false;
+            var Error = result.Error;
+            Snackbar.Add(Error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
+        }
+
     }
 
 

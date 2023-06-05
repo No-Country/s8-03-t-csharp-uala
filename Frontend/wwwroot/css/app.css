@@ -3,7 +3,7 @@
     background-color: rgba(var(--mud-palette-primary-rgb), 0.1) !important;
 }
 #blazor-error-ui {
-    background: lightyellow;
+    background: coral;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
