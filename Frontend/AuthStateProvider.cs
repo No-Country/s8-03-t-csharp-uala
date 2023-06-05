@@ -24,6 +24,7 @@ internal class AuthStateProvider : AuthenticationStateProvider
         }
         await _localStorage.SetItemAsync("authToken", savedToken);
         var identity = ParseClaimsFromJwt(savedToken);
+        var test = new ClaimsPrincipal(identity);
         var exp = identity.Claims.Where(a => a.Type == "exp").Select(c => c.Value).SingleOrDefault();
         if (exp != null)
         {
@@ -58,12 +59,13 @@ internal class AuthStateProvider : AuthenticationStateProvider
         {
             var claimsPrincipal = tokenHandler.ReadJwtToken(jwtToken);
             var identity = new ClaimsIdentity(claimsPrincipal.Claims, "jwt");
-            return identity;
+            claims.AddRange(identity.Claims.Where(a => a.Type != "role"));
+            claims.AddRange(identity.Claims.Where(a => a.Type == "role").Select(claim => new Claim(ClaimTypes.Role, claim.Value)));
+            return new ClaimsIdentity(claims,"jwt");
         }
         catch (Exception)
         {
             return new ClaimsIdentity();
         }
     }
-
 }

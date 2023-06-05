@@ -7,7 +7,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Color="Color.Primary" Fixed="true" Elevation="0">
+    <MudAppBar Color="Color.Transparent" Fixed="true" Elevation="0">
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudLink Href="/"><MudImage Alt="Logo" Src="/img/Logo.svg" /></MudLink>
         </MudHidden>
@@ -17,7 +17,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" OnClick="@((e) => DrawerToggle())" />
             </Authorized>
             <NotAuthorized>
-                <MudButton Variant="Variant.Filled"  Style="Color:black;background-color:white" OnClick="@(() => NavigationManager.NavigateTo("Login"))">Login</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"  OnClick="@(() => NavigationManager.NavigateTo("Login"))">Login</MudButton>
             </NotAuthorized>
         </AuthorizeView>
     </MudAppBar>

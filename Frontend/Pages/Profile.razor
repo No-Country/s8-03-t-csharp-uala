@@ -26,7 +26,6 @@
         font-size: 14px;
         line-height: 16px;
     }
-
     .td-pay{
         font-size: 12px;
         font-weight: 700;
@@ -36,7 +35,9 @@
 
 <PageTitle>Alau - Profile</PageTitle>
 
-<MudText Typo="Typo.h6" Align="Align.Center"><b>Perfil</b></MudText>
+<MudText Typo="Typo.h6" Align="Align.Center">
+    <b>Perfil</b>
+</MudText>
 
 <main class="d-flex flex-column flex-wrap align-center justify-center">
     <div style="width:100%; max-width:900px" class="d-flex flex-column flex-wrap align-center justify-center gap-2">
@@ -44,7 +45,7 @@
         <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-column flex-wrap align-center justify-center py-10">
             <div style="width:fit-content;" class="pb-4">
                 <MudAvatar Style="width:100px; height:100px">
-                    <MudImage Src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/480px-Default_pfp.svg.png" />
+                    <MudImage Src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/480px-Default_pfp.svg.png"/>
                 </MudAvatar>
             </div>
             <MudText Class="subtitle">Adam RichMond</MudText>
@@ -83,32 +84,34 @@
         <MudHidden Breakpoint="Breakpoint.Xs">
             <div style="width:90%" class=" d-flex flex-row flex-wrap justify-space-between align-start pa-1">
 
-                    <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-column flex-wrap justify-center align-content-space-between pa-1">
-                        <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                            <MudText Class="subtitle-2">Ultimas tareas</MudText>
-                            <MudText Class="subtitle-2">Importe</MudText>
-                        </div>
-                        <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                            <MudText Class="td-pay">Musimundo</MudText>
-                            <MudText Class="td-pay">@ConvertToCurrencyFormat(12456)</MudText>
-                        </div><div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                            <MudText Class="td-pay">Youtube</MudText>
-                            <MudText Class="td-pay">@ConvertToCurrencyFormat(2566)</MudText>
-                        </div><div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                            <MudText Class="td-pay">Steam</MudText>
-                            <MudText Class="td-pay">@ConvertToCurrencyFormat(63356)</MudText>
-                        </div>
-                    </MudPaper>
+                <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-column flex-wrap justify-center align-content-space-between pa-1">
+                    <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                        <MudText Class="subtitle-2">Ultimas tareas</MudText>
+                        <MudText Class="subtitle-2">Importe</MudText>
+                    </div>
+                    <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                        <MudText Class="td-pay">Musimundo</MudText>
+                        <MudText Class="td-pay">@ConvertToCurrencyFormat(12456)</MudText>
+                    </div>
+                    <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                        <MudText Class="td-pay">Youtube</MudText>
+                        <MudText Class="td-pay">@ConvertToCurrencyFormat(2566)</MudText>
+                    </div>
+                    <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                        <MudText Class="td-pay">Steam</MudText>
+                        <MudText Class="td-pay">@ConvertToCurrencyFormat(63356)</MudText>
+                    </div>
+                </MudPaper>
 
-                    <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row flex-wrap pa-1 gap-2">
-                        <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                            <MudText Class="subtitle">Pagar</MudText>
-                            <MudText Class="number-price">Total: @ConvertToCurrencyFormat(120000)</MudText>
-                        </div>
-                        <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Servicios</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Trabajo</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Social</MudButton>
-                    </MudPaper>
+                <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row flex-wrap pa-1 gap-2">
+                    <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                        <MudText Class="subtitle">Pagar</MudText>
+                        <MudText Class="number-price">Total: @ConvertToCurrencyFormat(120000)</MudText>
+                    </div>
+                    <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Servicios</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Trabajo</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Tertiary">Social</MudButton>
+                </MudPaper>
             </div>
         </MudHidden>
 
@@ -121,10 +124,12 @@
                 <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
                     <MudText Class="td-pay">Musimundo</MudText>
                     <MudText Class="td-pay">@ConvertToCurrencyFormat(12456)</MudText>
-                </div><div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                </div>
+                <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
                     <MudText Class="td-pay">Youtube</MudText>
                     <MudText Class="td-pay">@ConvertToCurrencyFormat(2566)</MudText>
-                </div><div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
+                </div>
+                <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
                     <MudText Class="td-pay">Steam</MudText>
                     <MudText Class="td-pay">@ConvertToCurrencyFormat(63356)</MudText>
                 </div>
@@ -141,10 +146,9 @@
             </MudPaper>
         </MudHidden>
     </div>
-    
-    
 
-@*    <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-1 gap-2">
+
+    @*    <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-1 gap-2">
         <MudText Style="width:100%" Typo="Typo.h6">Ventas</MudText>
         <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
             <CustomGraphics>
@@ -155,16 +159,16 @@
     </MudPaper>*@
 
 
-    
+
 </main>
 
 @code {
     //public double[] data = { 2350, 5400, 2800, 5563 };
     //public string[] labels = { "Servicios", "Compras", "Entretenimientos", "Sin Categorias" };
- 
+
     private string ConvertToCurrencyFormat(double number)
     {
         return $"${number:n0}";
     }
-}
 
+}
