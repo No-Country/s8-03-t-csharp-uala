@@ -53,9 +53,9 @@ namespace UalaReplicaProject.Controllers
         }
         
         [HttpPut("put")]
-        public ActionResult PutAccount(Guid id, EditAccountDTO editAccountDTO)
+        public async Task<ActionResult> PutAccount(Guid id, EditAccountDTO editAccountDTO)
         {
-            var response = _AccountService.UpdateAccount(id, editAccountDTO);
+            var response = await _AccountService.UpdateAccountAsync(id, editAccountDTO);
             if(!response.Success)
             {
                 return StatusCode(response.StatusCode, response.Message);

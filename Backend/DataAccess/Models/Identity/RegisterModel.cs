@@ -10,7 +10,7 @@ public class RegisterModel
     [Display(Name = "Username")]
     public string Username { get; set; }
     [Required]
-    [Display(Name = "Username")]
+    [Display(Name = "Name")]
     public string Name { get; set; }
 
     [Required]

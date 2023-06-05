@@ -90,10 +90,10 @@ namespace Services
             return response;
         }
 
-        public ResponseDTO UpdateAccount(Guid id, EditAccountDTO editAccountDTO)
+        public async Task<ResponseDTO> UpdateAccountAsync(Guid id, EditAccountDTO editAccountDTO)
         {
             var account = editAccountDTO.ToEditAccountDTO(id);
-            var response = _accountRepository.UpdateAccount(account);
+            var response = await _accountRepository.UpdateAccount(account);
             var dto = response.ToAccountDTO();
 
             var rpta = new ResponseDTO
