@@ -5,6 +5,7 @@ using ComplyCube.Net;
 using ComplyCube.Net.Resources.Clients;
 using ComplyCube.Net.Resources.SDKTokens;
 using CustomApi.Models.Identity;
+using DataAccess.Models.ApplicationModels;
 using DataAccess.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -78,13 +79,29 @@ public class AuthenticateController : ControllerBase
         {
             Email = model.Email,
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = model.Username
+            UserName = model.Username,
+            Address = 
+            {
+                City = model.City,
+                Province = model.Province,
+                Road = model.Road,
+                ZipCode = model.ZipCode
+            },
+            Accounts = new List<Account>()
+            {
+                new Account()
+                {
+                    CVU = new Random().NextInt64(1000000000000000000, long.MaxValue),
+                    Balance = 0,
+                    InvestedBalance = 0,
+                    AccountNumber = new Random().NextInt64(1000000000000000000, long.MaxValue),
+                    Alias = model.Username,
+                    Url_ProfilePicture = $"$https://api.dicebear.com/6.x/initials/svg?size=64&seed={model.Username}"
+                }
+            }
         };
         var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-        return Ok(new { Status = "Success", Message = "User created successfully!" });
+        return !result.Succeeded ? StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User creation failed! Please check user details and try again." }) : Ok(new { Status = "Success", Message = "User created successfully!" });
     }
 
     [HttpPost]

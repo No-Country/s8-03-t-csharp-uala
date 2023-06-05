@@ -12,8 +12,8 @@
 <MudTextField @bind-Value="@_loginModel.Password" Label="Contraseña" Variant="Variant.Outlined" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
 
 <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="my-4">
-    <MudLink Href="/Registro">¿No tienes una cuenta?</MudLink>
-    <MudLink Href="/RecuperarContraseña">¿Olvidaste tu contraseña?</MudLink>
+    <MudLink Href="/Register">¿No tienes una cuenta?</MudLink>
+    <MudLink Href="/ResetPassword">¿Olvidaste tu contraseña?</MudLink>
 </MudStack>
 
 @if (_loading)
@@ -94,8 +94,8 @@ else
         else
         {
             _loading = false;
-            var Error = result.Error;
-            Snackbar.Add(Error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
+            var error = result.Error;
+            Snackbar.Add(error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
         }
 
     }

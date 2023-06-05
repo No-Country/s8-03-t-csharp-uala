@@ -10,6 +10,7 @@ namespace DataAccess.Models.Identity
 {
     public class ApplicationUser : IdentityUser
     {
+        public string Name { get; set; }
         public ICollection<Account> Accounts { get; set; }
         public Address Address { get; set; }
 

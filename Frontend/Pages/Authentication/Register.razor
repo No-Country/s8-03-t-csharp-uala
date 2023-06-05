@@ -1,28 +1,65 @@
 ﻿@page "/Register"
 @layout LoginLayout
-@inject IComplyCubeService _client
-<MudText Typo="Typo.h4" GutterBottom="true">Sign Up</MudText>
-@if (Loading)
-{
-    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
-}
-else
-{
-    <ComplyCube Token="@Token" OnComplete="HandleVerificationComplete" />
-}
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+<PageTitle>Registro</PageTitle>
+<MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+    <MudText>Introduzca sus datos</MudText>
+</MudStack>
+<MudGrid>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Name" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Email" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Username" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Password" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.ConfirmPassword" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Road" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Province" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.City" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+    <MudItem md="6" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.ZipCode" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    </MudItem>
+</MudGrid>
+<MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Class="my-4">
+    <MudLink Href="/Login">¿Tienes una cuenta?</MudLink>
+</MudStack>
 
+<MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="HandleRegister" Size="Size.Large" FullWidth="true">Registrate</MudButton>
+
+<MudDivider></MudDivider>
+<MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Class="my-4">
+    <MudText Class="my-2" Color="Color.Dark" Typo="Typo.subtitle1">Alau Tecnologias, 2023</MudText>
+</MudStack>
 @code
 {
-    private bool Loading { get; set; } = true;
-    private string Token { get; set; } = "";
-    protected override async Task OnInitializedAsync()
+    private readonly RegisterModel _registerModel = new RegisterModel();
+    private async Task HandleRegister()
     {
-        Token = await _client.GenerateToken("647e04573d8e4800088adf52");
-        Loading = false;
-    }
-
-    private static void HandleVerificationComplete()
-    {
-        
+        var result = await AuthService.Register(_registerModel);
+        if (result.Successful)
+        {
+            NavigationManager.NavigateTo("/Login");
+        }
+        else
+        {
+            var error = result.Error;
+            Snackbar.Add(error, Severity.Error, config => { config.ShowCloseIcon = true; config.ShowTransitionDuration = 150; config.HideTransitionDuration = 150; config.VisibleStateDuration = 1000; });
+        }
     }
 }

@@ -9,7 +9,7 @@ internal class ComplyCubeService  : IComplyCubeService
 {
     private static readonly HttpClient Client = new();
 
-    public async Task<string> GenerateToken(string req)
+    public async Task<string?> GenerateToken(string req)
     {
         var response = await Client.GetAsync($"https://selecionadouala.wittyflower-4fe05e2c.southcentralus.azurecontainerapps.io/api/Authenticate/GenerateToken/{req}");
         var result = await response.Content.ReadAsStringAsync()!;

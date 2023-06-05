@@ -2,5 +2,5 @@
 
 internal interface IComplyCubeService
 {
-    Task<string> GenerateToken(string req);
+    Task<string?> GenerateToken(string req);
 }
