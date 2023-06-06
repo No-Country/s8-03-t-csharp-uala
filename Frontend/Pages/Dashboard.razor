@@ -1,4 +1,4 @@
-﻿@page "/dashboard"
+﻿@page "/home"
 @layout DashboardLayout
 @using ApexCharts
 
@@ -39,18 +39,21 @@
         <div>
             <MudText Typo="Typo.h6">Mis Ganancias</MudText>
             <div>
-                <ApexChart TItem="GananciaModelTest"
-                           Title="Order Net Value">
+                @if (Orders.Count > 0)
+                {
+                    <ApexChart TItem="GananciaModelTest"
+                               Title="Order Net Value">
 
-                    <ApexPointSeries TItem="GananciaModelTest"
-                                     Items="Orders"
-                                     Name="Gross Value"
-                                     XValue="@(e => e.XAxisLabels)"
-                                     YAggregate="@(e => e.Sum(e => e.Value))"
-                                     SeriesType="SeriesType.Bar"
-                                     Color="#005ba3"
-                                      />
-                </ApexChart>
+                        <ApexPointSeries TItem="GananciaModelTest"
+                                         Items="Orders"
+                                         Name="Gross Value"
+                                         XValue="@(e => e.XAxisLabels)"
+                                         YAggregate="@(e => e.Sum(e => e.Value))"
+                                         SeriesType="SeriesType.Bar"
+                                         Color="#005ba3" />
+                    </ApexChart>
+                }
+                
             </div>
         </div>
         
@@ -75,7 +78,7 @@
     //public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
     private List<GananciaModelTest> Orders = new List<GananciaModelTest>();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         Element e1 = new Element()
         {
