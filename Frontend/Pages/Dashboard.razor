@@ -73,24 +73,7 @@
     //    new ChartSeries() { Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
     //};
     //public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
-    private List<GananciaModelTest> Orders = new List<GananciaModelTest>()
-    {
-        new GananciaModelTest()
-        {
-            XAxisLabels = "Jan",
-            Value = 40
-        },   
-        new GananciaModelTest()
-        {
-            XAxisLabels = "Feb",
-            Value = 20
-        },   
-        new GananciaModelTest()
-        {
-            XAxisLabels = "Mar",
-            Value = 258
-        },    
-    };
+    private List<GananciaModelTest> Orders = new List<GananciaModelTest>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,7 +82,26 @@
             Nombre = "Youtube",
             Import = 21365
         };
+
+        GananciaModelTest A1 = new GananciaModelTest()
+            {
+                XAxisLabels = "Jan",
+                Value = 40
+            };
+        GananciaModelTest A2 = new GananciaModelTest()
+            {
+                XAxisLabels = "Feb",
+                Value = 20
+            };
+        GananciaModelTest A3 = new GananciaModelTest()
+            {
+                XAxisLabels = "Mar",
+                Value = 258
+            };
         Elements.Add(e1);
+        Orders.Add(A1);
+        Orders.Add(A2);
+        Orders.Add(A3);
         StateHasChanged();
     }
  
