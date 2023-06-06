@@ -19,7 +19,7 @@
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
-                    <MudTd DataLabel="Import">@context.Import</MudTd>
+                    <MudTd DataLabel="Import">@ConvertToCurrencyFormat(context.Import)</MudTd>
                 </RowTemplate>
             
             </MudTable>
