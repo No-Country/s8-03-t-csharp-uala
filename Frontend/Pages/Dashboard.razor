@@ -1,0 +1,118 @@
+﻿@page "/home"
+@layout DashboardLayout
+@using ApexCharts
+
+<PageTitle>Alau - DashBoard</PageTitle>
+
+<main class="d-flex flex-column flex-wrap align-center justify-center">
+    <div style="width:100%; max-width:900px" class="d-flex flex-column flex-wrap align-center justify-center gap-2">
+        <MudPaper Elevation="1" Width="90%" Class="pa-2">
+            <MudText Class="pb-1">Saldo:</MudText>
+            <MudText Typo="Typo.h6">@ConvertToCurrencyFormat(9653)</MudText>
+        </MudPaper>
+
+        <div style="width: 90%">
+            <MudTable Style="width:100%" Items="@Elements" Hover="true" LoadingProgressColor="MudBlazor.Color.Primary" >
+                <HeaderContent>
+                    <MudTh>Nombre</MudTh>
+                    <MudTh>Import</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
+                    <MudTd DataLabel="Import">@ConvertToCurrencyFormat(context.Import)</MudTd>
+                </RowTemplate>
+            
+            </MudTable>
+            <MudText>Ver mas Movimientos</MudText>
+        </div>
+
+        <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-2 gap-2">
+            <MudText Style="width:100%" Typo="Typo.h6">Analisis de Gastos</MudText>
+            <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
+                <CustomGraphics>
+                    <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
+                    <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@ConvertToCurrencyFormat(data.Sum())</text>
+                </CustomGraphics>
+            </MudChart>
+        </MudPaper>
+
+        <div>
+            <MudText Typo="Typo.h6">Mis Ganancias</MudText>
+            <div>
+                @if (Orders.Count > 0)
+                {
+                    <ApexChart TItem="GananciaModelTest"
+                               Title="Order Net Value">
+
+                        <ApexPointSeries TItem="GananciaModelTest"
+                                         Items="Orders"
+                                         Name="Gross Value"
+                                         XValue="@(e => e.XAxisLabels)"
+                                         YAggregate="@(e => e.Sum(e => e.Value))"
+                                         SeriesType="SeriesType.Bar"
+                                         Color="#005ba3" />
+                    </ApexChart>
+                }
+                
+            </div>
+        </div>
+        
+    </div>
+</main>
+
+
+@code {
+    // Chart Donut
+    public double[] data = { 2350, 5400, 2800, 5563 };
+    public string[] labels = { "Servicios", "Compras", "Entretenimientos", "Sin Categorias" };
+    //Table
+    private bool _hidePosition;
+    private bool _loading;
+    private ICollection<Element> Elements = new List<Element>();
+    //Chart Bar 
+    //private int Index = 0; //default value cannot be 0 -> first selectedindex is 0.
+    //public List<ChartSeries> Series = new List<ChartSeries>()
+    //{
+    //    new ChartSeries() { Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
+    //};
+    //public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+    private List<GananciaModelTest> Orders = new List<GananciaModelTest>();
+
+    protected override void OnInitialized()
+    {
+        Element e1 = new Element()
+        {
+            Nombre = "Youtube",
+            Import = 21365
+        };
+
+        GananciaModelTest A1 = new GananciaModelTest()
+            {
+                XAxisLabels = "Jan",
+                Value = 40
+            };
+        GananciaModelTest A2 = new GananciaModelTest()
+            {
+                XAxisLabels = "Feb",
+                Value = 20
+            };
+        GananciaModelTest A3 = new GananciaModelTest()
+            {
+                XAxisLabels = "Mar",
+                Value = 258
+            };
+        Elements.Add(e1);
+        Orders.Add(A1);
+        Orders.Add(A2);
+        Orders.Add(A3);
+        StateHasChanged();
+    }
+ 
+
+    // Convert numbers type double in numbers price
+    private string ConvertToCurrencyFormat(double number)
+    {
+        return $"${number:n0}";
+    }
+
+}
