@@ -22,3 +22,13 @@
         </MudCard>
     </Authorized>
 </AuthorizeView>
+
+
+@*<AuthorizeView>
+    <Authorized>
+        @{
+            var test = context.User.Claims.SingleOrDefault(a => a.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            var test2 = 0;
+        }
+    </Authorized>
+</AuthorizeView>*@

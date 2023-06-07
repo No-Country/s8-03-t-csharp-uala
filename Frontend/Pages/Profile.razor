@@ -1,6 +1,8 @@
 ﻿@page "/profile"
 @layout ProfileLayout
-
+@using System.IdentityModel.Tokens.Jwt
+@using System.Security.Cryptography
+@inject UalaSelecionado8.Services.IAccountService AccountService
 <style>
     .back-gray{
         background: #F9F9F9;
@@ -143,11 +145,27 @@
 
 </main>
 
-
+@*<AuthorizeView>
+    <Authorized>
+        @{
+            idAccount = context.User.Claims.SingleOrDefault(a => a.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            StateHasChanged();
+        }
+    </Authorized>
+</AuthorizeView>*@
 
 @code {
     [Inject] private IDialogService DialogService { get; set; }
     private int cvu = 1234567;
+    private string idAccount;
+    private string Data;
+
+
+    //protected override void OnInitialized()
+    //{
+    //    DateAccount();
+    //}
+
     private string ConvertToCurrencyFormat(double number)
     {
         return $"${number:n0}";
@@ -161,4 +179,8 @@
         StateHasChanged();
     }
 
+    //private async Task DateAccount()
+    //{
+    //    var response = await AccountService.GetDataAccountAsync(idAccount);
+    //}
 }
