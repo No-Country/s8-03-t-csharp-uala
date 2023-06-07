@@ -2,6 +2,7 @@
 @layout ProfileLayout
 @using System.IdentityModel.Tokens.Jwt
 @using System.Security.Cryptography
+@using UalaSelecionado8.Services
 @inject UalaSelecionado8.Services.IAccountService AccountService
 <style>
     .back-gray{
@@ -142,29 +143,21 @@
             </MudPaper>
         </MudHidden>
     </div>
-
 </main>
 
-@*<AuthorizeView>
-    <Authorized>
-        @{
-            idAccount = context.User.Claims.SingleOrDefault(a => a.Type == JwtRegisteredClaimNames.Sub)?.Value;
-            StateHasChanged();
-        }
-    </Authorized>
-</AuthorizeView>*@
+
 
 @code {
     [Inject] private IDialogService DialogService { get; set; }
     private int cvu = 1234567;
     private string idAccount;
     private string Data;
+    private Response DataAccount;
 
-
-    //protected override void OnInitialized()
-    //{
-    //    DateAccount();
-    //}
+    protected override void OnInitialized()
+    {
+        DateAccount();
+    }
 
     private string ConvertToCurrencyFormat(double number)
     {
@@ -172,15 +165,15 @@
     }
     private async void OnButtonClicked()
     {
-        bool? result = await DialogService.ShowMessageBox(
+        var result = await DialogService.ShowMessageBox(
             "Mis Datos",
-            (MarkupString)$"<b>CVU </b>: {cvu} <br/><b>Alias</b>: Exequiel.UALA"
+            (MarkupString)$"<b>CVU </b>: {DataAccount.Result.Cvu} <br/><b>Alias</b>: {DataAccount.Result.Alias}"
             , cancelText: "Cancel");
         StateHasChanged();
     }
 
-    //private async Task DateAccount()
-    //{
-    //    var response = await AccountService.GetDataAccountAsync(idAccount);
-    //}
+    private async Task DateAccount()
+    {
+        DataAccount = await AccountService.GetDataAccountAsync();
+    }
 }
