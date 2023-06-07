@@ -6,6 +6,7 @@ using MudBlazor.Services;
 using UalaSelecionado8.Services.Authentication;
 using UalaSelecionado8;
 using UalaSelecionado8.Services.Api;
+using UalaSelecionado8.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +18,7 @@ builder.Services.AddAuthorizationCore(o =>
 });
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IComplyCubeService, ComplyCubeService>();
 builder.Services.AddScoped(sp => new AuthenticatedHttpClient(sp.GetRequiredService<ILocalStorageService>())
 {
