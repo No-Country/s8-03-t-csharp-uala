@@ -18,7 +18,7 @@ namespace Repositories
         public async Task<Account> GetAccountById(Guid id)
         {
             var account = await _context.Set<Account>()
-                             .SingleOrDefaultAsync(t => t.Id == id);
+                             .FirstAsync(t => t.OwnerId == id.ToString());
 
             return account;
         }
