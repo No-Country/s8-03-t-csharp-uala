@@ -50,16 +50,10 @@
             </div>
             <MudText Class="subtitle">Adam RichMond</MudText>
         </MudPaper>
-        <div style="width:90%">
-            <MudPaper Elevation="0" Class="back-gray d-flex flex-column flex-wrap align-center justify-center py-2" style="max-width:300px">
-                <MudText Align="Align.Start" Style="width:100%" Class="subtitle pl-2">Ver mi CVU</MudText>
-            </MudPaper>
-
-        </div>
         <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
             <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                <MudText Class="pl-1 subtitle-2">Messages (5)</MudText>
-                <MudButton Variant="Variant.Filled" Color="Color.Secondary">Check</MudButton>
+                <MudText Class="pl-1 subtitle-2">Ver mi CVU</MudText>
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="OnButtonClicked">Check</MudButton>
             </MudPaper>
             <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row flex-wrap justify-space-between align-center pa-2">
                 <MudText Class="subtitle-2">Total Ganado</MudText>
@@ -70,8 +64,8 @@
         <MudHidden Breakpoint="Breakpoint.Xs">
             <div class="d-flex flex-row flex-wrap justify-space-between align-center " style="width:90%;">
                 <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row flex-wrap justify-space-between align-center pa-1">
-                    <MudText Class="pl-1 subtitle-2">Messages (5)</MudText>
-                    <MudButton Variant="Variant.Filled" Color="Color.Secondary">Check</MudButton>
+                    <MudText Class="pl-1 subtitle-2">Ver mi CVU</MudText>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="OnButtonClicked">Check</MudButton>
                 </MudPaper>
                 <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row flex-wrap justify-space-between align-center pa-2">
                     <MudText Class="subtitle-2">Total Ganado</MudText>
@@ -147,28 +141,24 @@
         </MudHidden>
     </div>
 
-
-    @*    <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-1 gap-2">
-        <MudText Style="width:100%" Typo="Typo.h6">Ventas</MudText>
-        <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
-            <CustomGraphics>
-                <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-                <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@ConvertToCurrencyFormat(data.Sum())</text>
-            </CustomGraphics>
-        </MudChart>
-    </MudPaper>*@
-
-
-
 </main>
 
-@code {
-    //public double[] data = { 2350, 5400, 2800, 5563 };
-    //public string[] labels = { "Servicios", "Compras", "Entretenimientos", "Sin Categorias" };
 
+
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+    private int cvu = 1234567;
     private string ConvertToCurrencyFormat(double number)
     {
         return $"${number:n0}";
+    }
+    private async void OnButtonClicked()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Mis Datos",
+            (MarkupString)$"<b>CVU </b>: {cvu} <br/><b>Alias</b>: Exequiel.UALA"
+            , cancelText: "Cancel");
+        StateHasChanged();
     }
 
 }
