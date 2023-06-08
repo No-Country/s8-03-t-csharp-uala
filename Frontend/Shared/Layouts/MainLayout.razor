@@ -2,14 +2,14 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject IAuthService AuthService
-<MudThemeProvider IsDarkMode="_isDarkMode" Theme="_currentTheme" />
+<MudThemeProvider Theme="_currentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar Elevation="3">
-        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-            <MudLink Href=""><MudImage Src="" /></MudLink>
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudLink Href="/"><MudImage Alt="Logo" Src="/img/Logo.svg" /></MudLink>
         </MudHidden>
         <MudSpacer />
         <MudMenu AnchorOrigin="Origin.BottomRight" LockScroll="true" TransformOrigin="Origin.TopRight">
@@ -22,19 +22,19 @@
                     <MudMenuItem Href="/profile">
                         <div class="d-flex">
                             <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Person" />
-                            <MudText>Account</MudText>
+                            <MudText>Perfil</MudText>
                         </div>
                     </MudMenuItem>
                     <MudMenuItem Href="/home">
                         <div class="d-flex">
                             <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Factory" />
-                            <MudText>Home</MudText>
+                            <MudText>Inicio</MudText>
                         </div>
                     </MudMenuItem>
                     <div class="mt-4 mx-4">
                         <MudButton Color="Color.Error" FullWidth="true" StartIcon="@Icons.Material.Filled.Logout"
                                    Variant="Variant.Filled" OnClick="Logout">
-                            Logout
+                            Salir
                         </MudButton>
                     </div>
                 </div>
@@ -48,7 +48,6 @@
     </MudMainContent>
 </MudLayout>
 @code {
-    private bool _isDarkMode;
     readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
     async Task Logout()
     {

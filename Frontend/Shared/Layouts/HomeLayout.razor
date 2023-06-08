@@ -2,7 +2,7 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject IAuthService AuthService
-<MudThemeProvider @ref="_mudThemeProvider" IsDarkMode="_isDarkMode" Theme="_currentTheme" />
+<MudThemeProvider Theme="_currentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -14,7 +14,34 @@
         <MudSpacer />
         <AuthorizeView>
             <Authorized>
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" OnClick="@((e) => DrawerToggle())" />
+                <MudMenu AnchorOrigin="Origin.BottomRight" LockScroll="true" TransformOrigin="Origin.TopRight">
+                    <ActivatorContent>
+                        <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" />
+                    </ActivatorContent>
+                    <ChildContent>
+                        <div style="min-width: 220px">
+                            <PersonCard />
+                            <MudMenuItem Href="/profile">
+                                <div class="d-flex">
+                                    <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Person" />
+                                    <MudText>Perfil</MudText>
+                                </div>
+                            </MudMenuItem>
+                            <MudMenuItem Href="/home">
+                                <div class="d-flex">
+                                    <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Factory" />
+                                    <MudText>Inicio</MudText>
+                                </div>
+                            </MudMenuItem>
+                            <div class="mt-4 mx-4">
+                                <MudButton Color="Color.Error" FullWidth="true" StartIcon="@Icons.Material.Filled.Logout"
+                                           Variant="Variant.Filled" OnClick="Logout">
+                                    Salir
+                                </MudButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </MudMenu>
             </Authorized>
             <NotAuthorized>
                 <MudButton Variant="Variant.Filled" Color="Color.Primary"  OnClick="@(() => NavigationManager.NavigateTo("Login"))">Login</MudButton>
@@ -33,17 +60,7 @@
 @code {
     bool _drawerOpen = false;
     private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
-    private bool _isDarkMode;
-    private MudThemeProvider? _mudThemeProvider;
-    
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            StateHasChanged();
-        }
-    }
+
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;

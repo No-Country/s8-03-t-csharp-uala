@@ -1,9 +1,7 @@
 ﻿@page "/profile"
-@layout ProfileLayout
-@using System.IdentityModel.Tokens.Jwt
-@using System.Security.Cryptography
-@using UalaSelecionado8.Services
-@inject UalaSelecionado8.Services.IAccountService AccountService
+@layout MainLayout
+@inject IAccountService AccountService
+@inject IDialogService DialogService
 <style>
     .back-gray{
         background: #F9F9F9;
@@ -35,13 +33,11 @@
         opacity: 0.5;
     }
 </style>
-
 <PageTitle>Alau - Profile</PageTitle>
-
+<TitleDesc Title="Perfil" Description="Ver datos de tu perfil"></TitleDesc>
 <MudText Typo="Typo.h6" Align="Align.Center">
     <b>Perfil</b>
 </MudText>
-
 <main class="d-flex flex-column flex-wrap align-center justify-center">
     <div style="width:100%; max-width:900px" class="d-flex flex-column flex-wrap align-center justify-center gap-2">
 
@@ -74,13 +70,10 @@
                     <MudText Class="subtitle-2">Total Ganado</MudText>
                     <MudText Class="number-price">@ConvertToCurrencyFormat(9550)</MudText>
                 </MudPaper>
-
             </div>
         </MudHidden>
-
         <MudHidden Breakpoint="Breakpoint.Xs">
             <div style="width:90%" class=" d-flex flex-row flex-wrap justify-space-between align-start pa-1">
-
                 <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-column flex-wrap justify-center align-content-space-between pa-1">
                     <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
                         <MudText Class="subtitle-2">Ultimas tareas</MudText>
@@ -99,7 +92,6 @@
                         <MudText Class="td-pay">@ConvertToCurrencyFormat(63356)</MudText>
                     </div>
                 </MudPaper>
-
                 <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row flex-wrap pa-1 gap-2">
                     <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
                         <MudText Class="subtitle">Pagar</MudText>
@@ -111,7 +103,6 @@
                 </MudPaper>
             </div>
         </MudHidden>
-
         <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
             <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-column flex-wrap justify-center align-content-space-between pa-1">
                 <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
@@ -131,7 +122,6 @@
                     <MudText Class="td-pay">@ConvertToCurrencyFormat(63356)</MudText>
                 </div>
             </MudPaper>
-
             <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row flex-wrap pa-1 gap-2">
                 <div style="width:100%" Class="d-flex flex-row flex-wrap justify-space-between align-center pa-1">
                     <MudText Class="subtitle">Pagar</MudText>
@@ -144,22 +134,14 @@
         </MudHidden>
     </div>
 </main>
-
-
-
 @code {
-    [Inject] private IDialogService DialogService { get; set; }
-    private int cvu = 1234567;
-    private string idAccount;
-    private string Data;
-    private Response DataAccount;
-
-    protected override void OnInitialized()
+    private Response _dataAccount = null!;
+    protected override async Task OnInitializedAsync()
     {
-        DateAccount();
+        await DateAccount();
     }
 
-    private string ConvertToCurrencyFormat(double number)
+    private static string ConvertToCurrencyFormat(double number)
     {
         return $"${number:n0}";
     }
@@ -167,13 +149,13 @@
     {
         var result = await DialogService.ShowMessageBox(
             "Mis Datos",
-            (MarkupString)$"<b>CVU </b>: {DataAccount.Result.Cvu} <br/><b>Alias</b>: {DataAccount.Result.Alias}"
+            (MarkupString)$"<b>CVU </b>: {_dataAccount.Result.Cvu} <br/><b>Alias</b>: {_dataAccount.Result.Alias}"
             , cancelText: "Cancel");
         StateHasChanged();
     }
 
     private async Task DateAccount()
     {
-        DataAccount = await AccountService.GetDataAccountAsync();
+        _dataAccount = await AccountService.GetDataAccountAsync();
     }
 }
