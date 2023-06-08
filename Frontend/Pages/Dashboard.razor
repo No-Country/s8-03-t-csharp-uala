@@ -82,7 +82,7 @@
             </MudPaper>
 
             <div>
-                <MudText Typo="Typo.h5" Color="Color.Primary">Mis Ganancias</MudText>
+                <MudText Typo="Typo.h5" Color="Color.Primary">Mis Rendimientos</MudText>
                 <div>
                     @if (Orders.Count > 0)
                     {
@@ -91,7 +91,7 @@
 
                             <ApexCharts.ApexPointSeries TItem="GananciaModelTest"
                                                         Items="Orders"
-                                                        Name="Gross Value"
+                                                        Name="Interes por Mes"
                                                         XValue="@(e => e.XAxisLabels)"
                                                         YAggregate="@(e => e.Sum(e => e.Value))"
                                                         SeriesType="ApexCharts.SeriesType.Bar"
@@ -115,7 +115,7 @@
                 </MudPaper>
 
                 <div>
-                    <MudText Typo="Typo.h5" Color="Color.Primary">Mis Ganancias</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary">Mis Rendimientos</MudText>
                     <div>
                         @if (Orders.Count > 0)
                         {
@@ -124,7 +124,7 @@
 
                                 <ApexCharts.ApexPointSeries TItem="GananciaModelTest"
                                                             Items="Orders"
-                                                            Name="Gross Value"
+                                                            Name="Interes por Mes"
                                                             XValue="@(e => e.XAxisLabels)"
                                                             YAggregate="@(e => e.Sum(e => e.Value))"
                                                             SeriesType="ApexCharts.SeriesType.Bar"
@@ -179,17 +179,17 @@
 
         GananciaModelTest A1 = new GananciaModelTest()
             {
-                XAxisLabels = "Jan",
+                XAxisLabels = "Marzo",
                 Value = new Random().Next(100)
             };
         GananciaModelTest A2 = new GananciaModelTest()
             {
-                XAxisLabels = "Feb",
+                XAxisLabels = "Abril",
                 Value = new Random().Next(100)
             };
         GananciaModelTest A3 = new GananciaModelTest()
             {
-                XAxisLabels = "Mar",
+                XAxisLabels = "Mayo",
                 Value = new Random().Next(100)
             };
         Elements.Add(e1);
