@@ -13,7 +13,6 @@
             <MudLink Href=""><MudImage Src="" /></MudLink>
         </MudHidden>
         <MudSpacer />
-        <MudToggleIconButton @bind-Toggled="_isDarkMode" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode" />
         <MudMenu AnchorOrigin="Origin.BottomRight" LockScroll="true" TransformOrigin="Origin.TopRight">
             <ActivatorContent>
                 <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" />
@@ -39,7 +38,6 @@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <PersonCard></PersonCard>
-
         <MudNavMenu>
             <MudDivider Class="my-2 " />
             <MudText Typo="Typo.subtitle2" Color="Color.Primary" Class="pb-2  px-4">Inicio</MudText>
@@ -51,18 +49,17 @@
         <MudContainer Class="pa-4" MaxWidth="MaxWidth.False">
             @Body
         </MudContainer>
-
     </MudMainContent>
 </MudLayout>
 @code {
     private bool _isDarkMode;
-    bool _drawerOpen = true;
-    private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
+    bool _drawerOpen = false;
+    readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
-    public async Task Logout()
+    async Task Logout()
     {
         await AuthService.Logout();
         NavigationManager.NavigateTo("/");

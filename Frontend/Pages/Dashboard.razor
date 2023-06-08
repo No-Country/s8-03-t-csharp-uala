@@ -1,20 +1,24 @@
 ﻿@page "/home"
 @layout DashboardLayout
+@attribute [Authorize]
 
-
-<PageTitle>Alau - DashBoard</PageTitle>
-
+<PageTitle>Alau - Dashboard</PageTitle>
+<TitleDesc Title="Dashboard" Description="Visualiza tus movimientos financieros, transacciones y balance"></TitleDesc>
 <main class="d-flex flex-column flex-wrap align-center justify-center">
     <div style="width:100%; max-width:900px" class="d-flex flex-column flex-wrap align-center justify-center gap-2">
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
             <div style="width:90%" class="d-flex flex-column flex-wrap align-center justify-center gap-2">
-                <MudPaper Elevation="1" Width="100%" Class="pa-2">
-                    <MudText Class="pb-1">Saldo:</MudText>
-                    <MudText Typo="Typo.h6">@ConvertToCurrencyFormat(9653)</MudText>
-                </MudPaper>
+                <div style="width:100%">
+                    <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Saldo</MudText>
+                    <MudPaper Elevation="1" Class="pa-2">
+                        <MudText Typo="Typo.h6">Disponible: @ConvertToCurrencyFormat(9653)</MudText>
+                        <MudText Typo="Typo.h6">Invertido: @ConvertToCurrencyFormat(1578)</MudText>
+                    </MudPaper>
+                </div>
+
 
                 <div style="width: 100%">
-                    <MudText Class="pt-2">Mis Movimientos:</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Mis Movimientos</MudText>
                     <MudTable Elevation="1" Style="width:100%" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="MudBlazor.Color.Primary">
                         <HeaderContent>
                             <MudTh>Nombre</MudTh>
@@ -28,14 +32,17 @@
                         </RowTemplate>
 
                     </MudTable>
-                    <MudText Align="Align.Center" Class="pt-2">Ver mas Movimientos</MudText>
+                    <div class="d-flex align-center justify-center mt-4">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Ver mas Movimientos</MudButton>
+
+                    </div>
                 </div>
 
             </div>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
             <div style="width:90%" class="d-flex flex-row flex-wrap align-start justify-space-between gap-2">
-                <MudText Class="pt-2" Style="width:100%">Mis Movimientos:</MudText>
+                <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Mis Movimientos</MudText>
                 <div style="width: 75%">
                     <MudTable Elevation="1" Style="width:100%" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="MudBlazor.Color.Primary">
                         <HeaderContent>
@@ -50,21 +57,22 @@
                         </RowTemplate>
 
                     </MudTable>
-                    <MudText Align="Align.Center" Class="pt-2">Ver mas Movimientos</MudText>
+                    <div class="d-flex align-center justify-center mt-4">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Ver mas Movimientos</MudButton>
+                    </div>
                 </div>
-
-                <MudPaper Elevation="1" Width="20%" Class="pa-2">
-                    <MudText Class="pb-1">Saldo:</MudText>
-                    <MudText Typo="Typo.h6">@ConvertToCurrencyFormat(9653)</MudText>
+                <MudPaper Elevation="1" Style="width:20%" Class="pa-2">
+                    <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Saldo</MudText>
+                    <MudText Typo="Typo.body1">Disponible: @ConvertToCurrencyFormat(965)</MudText>
+                    <MudText Typo="Typo.body1">Invertido: @ConvertToCurrencyFormat(1578)</MudText>
                 </MudPaper>
-
             </div>
         </MudHidden>
-        
+
 
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
             <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-2 gap-2">
-                <MudText Style="width:100%" Typo="Typo.h6">Analisis de Gastos</MudText>
+                <MudText Style="width:100%" Typo="Typo.h5" Color="Color.Primary">Analisis de Gastos</MudText>
                 <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
                     <CustomGraphics>
                         <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
@@ -74,7 +82,7 @@
             </MudPaper>
 
             <div>
-                <MudText Typo="Typo.h6">Mis Ganancias</MudText>
+                <MudText Typo="Typo.h5" Color="Color.Primary">Mis Ganancias</MudText>
                 <div>
                     @if (Orders.Count > 0)
                     {
@@ -97,7 +105,7 @@
         <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
             <div style="width:90%" Class="d-flex flex-row justify-space-between align-start flex-wrap pa-2 gap-2">
                 <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-2 gap-2">
-                    <MudText Style="width:100%" Typo="Typo.h6">Analisis de Gastos</MudText>
+                    <MudText Style="width:100%" Typo="Typo.h5" Color="Color.Primary">Analisis de Gastos</MudText>
                     <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
                         <CustomGraphics>
                             <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
@@ -107,7 +115,7 @@
                 </MudPaper>
 
                 <div>
-                    <MudText Typo="Typo.h6">Mis Ganancias</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary">Mis Ganancias</MudText>
                     <div>
                         @if (Orders.Count > 0)
                         {
@@ -130,9 +138,9 @@
             </div>
         </MudHidden>
 
-      
-        
-        
+
+
+
     </div>
 </main>
 
@@ -145,7 +153,7 @@
     private bool _hidePosition = true;
     private bool _loading;
     private ICollection<Element> Elements = new List<Element>();
-    //Chart Bar 
+    //Chart Bar
     //private int Index = 0; //default value cannot be 0 -> first selectedindex is 0.
     //public List<ChartSeries> Series = new List<ChartSeries>()
     //{
@@ -157,17 +165,17 @@
     protected override void OnInitialized()
     {
         Element e1 = new Element()
-        {
-            Nombre = "Youtube",
-            Import = 21365,
-            Fecha = new DateTime(2023,03,14)
-        };
+            {
+                Nombre = "Youtube",
+                Import = 21365,
+                Fecha = new DateTime(2023, 03, 14)
+            };
         Element e2 = new Element()
-        {
-            Nombre = "HBOmax",
-            Import = 690,
-            Fecha = new DateTime(2023,03,14)
-        };
+            {
+                Nombre = "HBOmax",
+                Import = 690,
+                Fecha = new DateTime(2023, 03, 14)
+            };
 
         GananciaModelTest A1 = new GananciaModelTest()
             {
@@ -191,7 +199,7 @@
         Orders.Add(A3);
         StateHasChanged();
     }
- 
+
 
     // Convert numbers type double in numbers price
     private string ConvertToCurrencyFormat(double number)

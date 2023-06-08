@@ -3,28 +3,27 @@
 
 <style>
     .section-1{
-        height: calc(100vh - (calc(var(--mud-appbar-height) - var(--mud-appbar-height)/8)));
-        background: linear-gradient(91.65deg, #FF0000 0.15%, rgba(255, 23, 4, 0.613922) 99.98%, rgba(255, 53, 8, 0.114583) 99.99%, rgba(255, 48, 2, 0) 100%);
+        height: calc(99.15vh - (calc(var(--mud-appbar-height) - var(--mud-appbar-height)/8)));
+        background: linear-gradient(90deg, rgba(205,52,50,1) 0%, rgba(230,112,112,1) 100%);
         width: 100%;
     }
 </style>
 <PageTitle>Alau - Inicio</PageTitle>
-
 <div class="section-1">
     <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
         <MudStack Row="false" Style="width:100%; height: 100%; flex-wrap: wrap;" AlignItems="AlignItems.Center" Justify="Justify.SpaceEvenly">
-            <MudImage Style="width:100%; max-width: 350px"  Src="/img/HeroImg.png" />
-            <MudText Typo="Typo.h4" Align="Align.Center" Style="Color:#ffffffff;font-family: 'Ubuntu', sans-serif;"><b>Comenzá hoy a invertir</b></MudText>
-            <MudButton Href="/home" Variant="Variant.Filled" FullWidth="false">ACCEDE A LA APP</MudButton>
+            <MudImage Style="width:100%; max-width: 350px" Src="/img/HeroImg.png" />
+            <MudText Typo="Typo.h2" Align="Align.Center" Style="Color:#ffffffff;font-family: 'Ubuntu', sans-serif;"><b>Comenzá hoy a invertir</b></MudText>
+            <MudButton Href="/home" Variant="Variant.Filled" Style="background-color: whitesmoke; color: darkred;" FullWidth="false">ACCEDE A LA APP</MudButton>
         </MudStack>
     </MudHidden>
     <MudHidden Breakpoint="Breakpoint.Xs" >
         <MudStack Row="false" Style="width:100%; height: 100%; flex-wrap: wrap;" AlignItems="AlignItems.Center" Justify="Justify.Center">
             <div class="d-flex justify-center align-center flex-wrap">
-                <MudImage Style="width:45%; max-width: 350px" Src="/img/HeroImg.png" />
-                <MudText Typo="Typo.h4" Align="Align.Center" Style="Color:#ffffffff;font-family: 'Ubuntu', sans-serif; width:45%"><b>Comenzá hoy a invertir</b></MudText>
+                <MudImage Style="width:45%; max-width: 700px" Src="/img/HeroImg.png" />
+                <MudText Typo="Typo.h1" Align="Align.Center" Style="Color:#ffffffff;font-family: 'Ubuntu', sans-serif; width:45%"><b>Comenzá hoy a invertir</b></MudText>
             </div>
-            <MudButton Href="/home" Variant="Variant.Filled" Style="background-color: whitesmoke; color: darkred;" FullWidth="false">ACCEDE A LA APP</MudButton>
+            <MudButton Href="/home" Variant="Variant.Filled" Class="pa-3" Style="background-color: whitesmoke; color: darkred; font-weight: bold;font-size: 1.5em;" FullWidth="false">ACCEDE A LA APP</MudButton>
         </MudStack>
     </MudHidden>
 </div>

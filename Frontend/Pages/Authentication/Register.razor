@@ -1,48 +1,75 @@
 ﻿@page "/Register"
-@layout LoginLayout
+@layout RegisterLayout
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
+@inject IComplyCubeService Client
 <PageTitle>Registro</PageTitle>
-<MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
-    <MudText>Introduzca sus datos</MudText>
-</MudStack>
 <MudGrid>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Name" Label="Nombre" Variant="Variant.Outlined"/>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Personales</MudText>
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Email" Label="Correo Electrónico" Variant="Variant.Outlined"/>
+    <MudItem xs="12" sm="6">
+        <MudTextField T="string" @bind-Value="@_registerModel.Name" Label="Nombre" Variant="Variant.Outlined" />
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Username" Label="Nombre de usuario" Variant="Variant.Outlined"/>
+    <MudItem xs="12" sm="6">
+        <MudTextField T="string" @bind-Value="@_registerModel.Email" Label="Correo Electrónico" Variant="Variant.Outlined" />
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Password" Label="Contraseña" Variant="Variant.Outlined"/>
+    <MudItem xs="12" sm="4">
+        <MudTextField T="string" @bind-Value="@_registerModel.Username" Label="Nombre de usuario" Variant="Variant.Outlined" />
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.ConfirmPassword" Label="Confirmar contraseña" Variant="Variant.Outlined"/>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Contraseña</MudText>
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Road" Label="Calle" Variant="Variant.Outlined"/>
+    <MudItem xs="12" sm="6">
+        <MudTextField @bind-Value="@_registerModel.Password" Label="Contraseña" Variant="Variant.Outlined" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" />
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.Province" Label="Provincia" Variant="Variant.Outlined"/>
+    <MudItem xs="12" sm="6">
+        <MudTextField @bind-Value="@_registerModel.ConfirmPassword" Label="Confirmar Contraseña" Variant="Variant.Outlined" InputType="@_passwordInput2" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility2" />
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.City" Label="Ciudad" Variant="Variant.Outlined"/>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Dirección</MudText>
     </MudItem>
-    <MudItem md="6" sm="12">
-        <MudTextField T="string" @bind-Value="@_registerModel.ZipCode" Label="Código postal" Variant="Variant.Outlined"/>
+    <MudItem xs="12" sm="12">
+        <MudTextField T="string" @bind-Value="@_registerModel.Road" Label="Calle" Variant="Variant.Outlined" />
     </MudItem>
-
+    <MudItem xs="12" sm="4">
+        <MudTextField T="string" @bind-Value="@_registerModel.Province" Label="Provincia" Variant="Variant.Outlined" />
+    </MudItem>
+    <MudItem xs="12" sm="4">
+        <MudTextField T="string" @bind-Value="@_registerModel.City" Label="Ciudad" Variant="Variant.Outlined" />
+    </MudItem>
+    <MudItem xs="12" sm="4">
+        <MudTextField T="string" @bind-Value="@_registerModel.ZipCode" Label="Código postal" Variant="Variant.Outlined" />
+    </MudItem>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Verificacion de Identidad</MudText>
+    </MudItem>
+    <MudItem xs="12">
+        @if (Loading)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <ComplyCube Token="@Token" OnComplete="HandleVerificationComplete" />
+        }
+    </MudItem>
 </MudGrid>
 <MudStack Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.Center" Class="my-4">
     <MudLink Href="/Login">¿Tienes una cuenta?</MudLink>
 </MudStack>
-
-<MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="HandleRegister" Size="Size.Large" FullWidth="true">Registrate</MudButton>
-
+<MudButton Disabled="@_disabled" OnClick="HandleRegister" Size="Size.Large" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">
+    @if (_processing)
+    {
+        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+        <MudText Class="ms-2">Registrando...</MudText>
+    }
+    else
+    {
+        <MudText>Registrate</MudText>
+    }
+</MudButton>
 <MudDivider></MudDivider>
 <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Class="my-4">
     <MudText Class="my-2" Color="Color.Dark" Typo="Typo.subtitle1">Alau Tecnologias, 2023</MudText>
@@ -50,11 +77,62 @@
 @code
 {
     private readonly RegisterModel _registerModel = new RegisterModel();
+    bool _loading;
+    bool _passwordVisibility;
+    InputType _passwordInput = InputType.Password;
+    InputType _passwordInput2 = InputType.Password;
+    string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+    private bool _processing;
+    private bool _disabled = true;
+    private bool Loading { get; set; } = true;
+    private string Token { get; set; } = "";
+    protected override async Task OnInitializedAsync()
+    {
+        Token = (await Client.GenerateToken("647e04573d8e4800088adf52"))!;
+        Loading = false;
+    }
+    void TogglePasswordVisibility()
+    {
+        @if (_passwordVisibility)
+        {
+            _passwordVisibility = false;
+            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            _passwordInput = InputType.Password;
+        }
+        else
+        {
+            _passwordVisibility = true;
+            _passwordInputIcon = Icons.Material.Filled.Visibility;
+            _passwordInput = InputType.Text;
+        }
+    }
+    void TogglePasswordVisibility2()
+    {
+        @if (_passwordVisibility)
+        {
+            _passwordVisibility = false;
+            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            _passwordInput2 = InputType.Password;
+        }
+        else
+        {
+            _passwordVisibility = true;
+            _passwordInputIcon = Icons.Material.Filled.Visibility;
+            _passwordInput2 = InputType.Text;
+        }
+    }
+    private void HandleVerificationComplete()
+    {
+        _disabled = false;
+    }
     private async Task HandleRegister()
     {
+        _disabled = true;
+        _processing = true;
         var result = await AuthService.Register(_registerModel);
         if (result.Status is "Success")
         {
+            _processing = false;
             NavigationManager.NavigateTo("/Login");
         }
         else
