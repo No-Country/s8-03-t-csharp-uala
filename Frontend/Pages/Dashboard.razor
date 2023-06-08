@@ -28,7 +28,7 @@
                         <RowTemplate>
                             <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
                             <MudTd DataLabel="Fecha" HideSmall="_hidePosition">@context.Fecha.ToString("dd-MM-yy")</MudTd>
-                            <MudTd DataLabel="Import">@ConvertToCurrencyFormat(context.Import)</MudTd>
+                            <MudTd DataLabel="Import">@context.Import.ToString("C")</MudTd>
                         </RowTemplate>
 
                     </MudTable>
@@ -53,7 +53,7 @@
                         <RowTemplate>
                             <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
                             <MudTd DataLabel="Fecha" HideSmall="_hidePosition">@context.Fecha.ToString("dd-MM-yy")</MudTd>
-                            <MudTd DataLabel="Import">@ConvertToCurrencyFormat(context.Import)</MudTd>
+                            <MudTd DataLabel="Import">@context.Import.ToString("C")</MudTd>
                         </RowTemplate>
 
                     </MudTable>
@@ -76,7 +76,7 @@
                 <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
                     <CustomGraphics>
                         <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-                        <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@ConvertToCurrencyFormat(data.Sum())</text>
+                        <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="4">@data.Sum().ToString("C")</text>
                     </CustomGraphics>
                 </MudChart>
             </MudPaper>
@@ -109,7 +109,7 @@
                     <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
                         <CustomGraphics>
                             <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@ConvertToCurrencyFormat(data.Sum())</text>
+                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="4">@data.Sum().ToString("C")</text>
                         </CustomGraphics>
                     </MudChart>
                 </MudPaper>
@@ -147,7 +147,7 @@
 
 @code {
     // Chart Donut
-    public double[] data = { 2350, 5400, 2800, 5563 };
+    public double[] data = { new Random().Next(2350), new Random().Next(5400), new Random().Next(2800), new Random().Next(5563) };
     public string[] labels = { "Servicios", "Compras", "Entretenimientos", "Sin Categorias" };
     //Table
     private bool _hidePosition = true;
@@ -167,30 +167,30 @@
         Element e1 = new Element()
             {
                 Nombre = "Youtube",
-                Import = 21365,
+                Import = new Random().Next(21365),
                 Fecha = new DateTime(2023, 03, 14)
             };
         Element e2 = new Element()
             {
                 Nombre = "HBOmax",
-                Import = 690,
+                Import = new Random().Next(690),
                 Fecha = new DateTime(2023, 03, 14)
             };
 
         GananciaModelTest A1 = new GananciaModelTest()
             {
                 XAxisLabels = "Jan",
-                Value = 40
+                Value = new Random().Next(100)
             };
         GananciaModelTest A2 = new GananciaModelTest()
             {
                 XAxisLabels = "Feb",
-                Value = 20
+                Value = new Random().Next(100)
             };
         GananciaModelTest A3 = new GananciaModelTest()
             {
                 XAxisLabels = "Mar",
-                Value = 258
+                Value = new Random().Next(100)
             };
         Elements.Add(e1);
         Elements.Add(e2);
@@ -200,11 +200,10 @@
         StateHasChanged();
     }
 
-
     // Convert numbers type double in numbers price
-    private string ConvertToCurrencyFormat(double number)
+    private string ConvertToCurrencyFormat(int number)
     {
-        return $"${number:n0}";
+        return $"${new Random().Next(number):n0}";
     }
 
 }
