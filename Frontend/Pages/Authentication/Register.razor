@@ -132,8 +132,13 @@
         var result = await AuthService.Register(_registerModel);
         if (result.Status is "Success")
         {
+            await AuthService.Login(new LoginModel
+            {
+                Email = _registerModel.Email,
+                Password = _registerModel.Password
+            });
             _processing = false;
-            NavigationManager.NavigateTo("/Login");
+            NavigationManager.NavigateTo("/home");
         }
         else
         {
