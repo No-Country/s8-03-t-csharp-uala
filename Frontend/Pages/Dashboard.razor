@@ -25,6 +25,7 @@
                     <MudTable Elevation="1" Style="width:100%" Items="@_elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Primary">
                         <HeaderContent>
                             <MudTh>Nombre</MudTh>
+                            <MudTh>Categoria</MudTh>
                             <MudTh>Fecha</MudTh>
                             <MudTh>Importe</MudTh>
                         </HeaderContent>
@@ -34,14 +35,11 @@
                             <MudTd DataLabel="Fecha" HideSmall="_hidePosition">@context.Fecha.ToString("dd-MM-yy")</MudTd>
                             <MudTd DataLabel="Import">@context.Import.ToString("C")</MudTd>
                         </RowTemplate>
-
                     </MudTable>
                     <div class="d-flex align-center justify-center mt-4">
                         <MudButton Variant="Variant.Filled" Color="Color.Primary">Ver mas Movimientos</MudButton>
-
                     </div>
                 </div>
-
             </div>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
@@ -51,6 +49,7 @@
                     <MudTable Elevation="1" Style="width:100%" Items="@_elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Primary">
                         <HeaderContent>
                             <MudTh>Nombre</MudTh>
+                            <MudTh>Categoria</MudTh>
                             <MudTh>Fecha</MudTh>
                             <MudTh>Importe</MudTh>
                         </HeaderContent>
