@@ -1,5 +1,4 @@
-﻿@using UalaSelecionado8.Theme
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject IAuthService AuthService
 <MudThemeProvider Theme="_currentTheme" />
@@ -58,7 +57,7 @@
 
 
 @code {
-    bool _drawerOpen = false;
+    bool _drawerOpen;
     private readonly MudTheme _currentTheme = new MudBlazorAdminDashboard();
 
     void DrawerToggle()

@@ -16,9 +16,9 @@ public class MudBlazorAdminDashboard : MudTheme
         Palette.AppbarText = "#3a3a3a";
         Shadows.Elevation[1] = "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)";
         LayoutProperties.DefaultBorderRadius = "6px";
-        Typography = new Typography()
+        Typography = new Typography
         {
-            Default = new Default()
+            Default = new Default
             {
                 FontFamily = new[] { "Poppins", "Inter", "Ubuntu", "sans-serif" },
                 FontSize = "1rem",

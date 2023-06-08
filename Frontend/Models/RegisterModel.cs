@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace UalaSelecionado8.Models
+﻿namespace UalaSelecionado8.Models
 {
     public class RegisterModel
     {

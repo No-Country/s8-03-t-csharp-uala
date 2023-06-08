@@ -1,4 +1,7 @@
 ﻿@page "/home"
+@using ApexCharts
+@using Color = MudBlazor.Color
+@using ChartType = MudBlazor.ChartType
 @layout DashboardLayout
 @attribute [Authorize]
 
@@ -19,7 +22,7 @@
 
                 <div style="width: 100%">
                     <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Mis Movimientos</MudText>
-                    <MudTable Elevation="1" Style="width:100%" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="MudBlazor.Color.Primary">
+                    <MudTable Elevation="1" Style="width:100%" Items="@_elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Primary">
                         <HeaderContent>
                             <MudTh>Nombre</MudTh>
                             <MudTh>Fecha</MudTh>
@@ -27,6 +30,7 @@
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
+                            <MudTd DataLabel="Categoria">@context.Categoria</MudTd>
                             <MudTd DataLabel="Fecha" HideSmall="_hidePosition">@context.Fecha.ToString("dd-MM-yy")</MudTd>
                             <MudTd DataLabel="Import">@context.Import.ToString("C")</MudTd>
                         </RowTemplate>
@@ -44,7 +48,7 @@
             <div style="width:90%" class="d-flex flex-row flex-wrap align-start justify-space-between gap-2">
                 <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">Mis Movimientos</MudText>
                 <div style="width: 75%">
-                    <MudTable Elevation="1" Style="width:100%" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="MudBlazor.Color.Primary">
+                    <MudTable Elevation="1" Style="width:100%" Items="@_elements" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Primary">
                         <HeaderContent>
                             <MudTh>Nombre</MudTh>
                             <MudTh>Fecha</MudTh>
@@ -52,6 +56,7 @@
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Nombre">@context.Nombre</MudTd>
+                            <MudTd DataLabel="Categoria">@context.Categoria</MudTd>
                             <MudTd DataLabel="Fecha" HideSmall="_hidePosition">@context.Fecha.ToString("dd-MM-yy")</MudTd>
                             <MudTd DataLabel="Import">@context.Import.ToString("C")</MudTd>
                         </RowTemplate>
@@ -73,10 +78,10 @@
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
             <MudPaper Elevation="0" Width="90%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-2 gap-2">
                 <MudText Style="width:100%" Typo="Typo.h5" Color="Color.Primary">Analisis de Gastos</MudText>
-                <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
+                <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="@_elements.Select(a=>a.Import).ToArray()" InputLabels="@_elements.Select(a=>a.Categoria).ToArray()">
                     <CustomGraphics>
                         <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-                        <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="4">@data.Sum().ToString("C")</text>
+                        <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="4">@_elements.Sum(a=>a.Import).ToString("C")</text>
                     </CustomGraphics>
                 </MudChart>
             </MudPaper>
@@ -84,17 +89,17 @@
             <div>
                 <MudText Typo="Typo.h5" Color="Color.Primary">Mis Rendimientos</MudText>
                 <div>
-                    @if (Orders.Count > 0)
+                    @if (_orders.Count > 0)
                     {
                         <ApexCharts.ApexChart TItem="GananciaModelTest"
                                               Title="Order Net Value">
 
                             <ApexCharts.ApexPointSeries TItem="GananciaModelTest"
-                                                        Items="Orders"
+                                                        Items="_orders"
                                                         Name="Interes por Mes"
                                                         XValue="@(e => e.XAxisLabels)"
                                                         YAggregate="@(e => e.Sum(e => e.Value))"
-                                                        SeriesType="ApexCharts.SeriesType.Bar"
+                                                        SeriesType="SeriesType.Bar"
                                                         Color="#005ba3" />
                         </ApexCharts.ApexChart>
                     }
@@ -106,10 +111,10 @@
             <div style="width:90%" Class="d-flex flex-row justify-space-between align-start flex-wrap pa-2 gap-2">
                 <MudPaper Elevation="0" Width="45%" Class="back-gray d-flex flex-row justify-center align-center flex-wrap pa-2 gap-2">
                     <MudText Style="width:100%" Typo="Typo.h5" Color="Color.Primary">Analisis de Gastos</MudText>
-                    <MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@data" InputLabels="@labels">
+                    <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" InputData="@_elements.Select(a=>a.Import).ToArray()" InputLabels="@_elements.Select(a=>a.Categoria).ToArray()">
                         <CustomGraphics>
                             <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="4">@data.Sum().ToString("C")</text>
+                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="4">@_elements.Sum(a=>a.Import).ToString("C")</text>
                         </CustomGraphics>
                     </MudChart>
                 </MudPaper>
@@ -117,17 +122,17 @@
                 <div>
                     <MudText Typo="Typo.h5" Color="Color.Primary">Mis Rendimientos</MudText>
                     <div>
-                        @if (Orders.Count > 0)
+                        @if (_orders.Count > 0)
                         {
                             <ApexCharts.ApexChart TItem="GananciaModelTest"
                                                   Title="">
 
                                 <ApexCharts.ApexPointSeries TItem="GananciaModelTest"
-                                                            Items="Orders"
+                                                            Items="_orders"
                                                             Name="Interes por Mes"
                                                             XValue="@(e => e.XAxisLabels)"
                                                             YAggregate="@(e => e.Sum(e => e.Value))"
-                                                            SeriesType="ApexCharts.SeriesType.Bar"
+                                                            SeriesType="SeriesType.Bar"
                                                             Color="#005ba3" />
                             </ApexCharts.ApexChart>
                         }
@@ -146,13 +151,10 @@
 
 
 @code {
-    // Chart Donut
-    public double[] data = { new Random().Next(2350), new Random().Next(5400), new Random().Next(2800), new Random().Next(5563) };
-    public string[] labels = { "Servicios", "Compras", "Entretenimientos", "Sin Categorias" };
     //Table
     private bool _hidePosition = true;
     private bool _loading;
-    private ICollection<Element> Elements = new List<Element>();
+    private ICollection<Element> _elements = new List<Element>();
     //Chart Bar
     //private int Index = 0; //default value cannot be 0 -> first selectedindex is 0.
     //public List<ChartSeries> Series = new List<ChartSeries>()
@@ -160,43 +162,61 @@
     //    new ChartSeries() { Data = new double[] { 40, 20, 25, 27, 46, 60, 48, 80, 15 } },
     //};
     //public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
-    private List<GananciaModelTest> Orders = new List<GananciaModelTest>();
+    private List<GananciaModelTest> _orders = new List<GananciaModelTest>();
 
     protected override void OnInitialized()
     {
-        Element e1 = new Element()
-            {
-                Nombre = "Youtube",
-                Import = new Random().Next(21365),
-                Fecha = new DateTime(2023, 03, 14)
-            };
-        Element e2 = new Element()
-            {
+        var e1 = new Element
+        {
                 Nombre = "HBOmax",
-                Import = new Random().Next(690),
-                Fecha = new DateTime(2023, 03, 14)
+                Import = new Random().Next(250),
+                Categoria = "Entretenimiento",
+                Fecha = DateTime.Today.AddDays(new Random().Next(-30, 1))
+            };
+        var e2 = new Element
+        {
+                Nombre = "Pago de Agua",
+                Import = new Random().Next(2000),
+                Categoria = "Servicios",
+                Fecha = DateTime.Today.AddDays(new Random().Next(-30, 1))
+            };
+        var e3 = new Element
+        {
+                Nombre = "Rappi",
+                Import = new Random().Next(500),
+                Categoria = "Comida",
+                Fecha = DateTime.Today.AddDays(new Random().Next(-30, 1))
+            };
+        var e4 = new Element
+        {
+                Nombre = "Amazon",
+                Import = new Random().Next(999),
+                Categoria = "Compras",
+                Fecha = DateTime.Today.AddDays(new Random().Next(-30, 1))
             };
 
-        GananciaModelTest A1 = new GananciaModelTest()
-            {
+        var a1 = new GananciaModelTest
+        {
                 XAxisLabels = "Marzo",
                 Value = new Random().Next(100)
             };
-        GananciaModelTest A2 = new GananciaModelTest()
-            {
+        var a2 = new GananciaModelTest
+        {
                 XAxisLabels = "Abril",
                 Value = new Random().Next(100)
             };
-        GananciaModelTest A3 = new GananciaModelTest()
-            {
+        var a3 = new GananciaModelTest
+        {
                 XAxisLabels = "Mayo",
                 Value = new Random().Next(100)
             };
-        Elements.Add(e1);
-        Elements.Add(e2);
-        Orders.Add(A1);
-        Orders.Add(A2);
-        Orders.Add(A3);
+        _elements.Add(e1);
+        _elements.Add(e2);
+        _elements.Add(e3);
+        _elements.Add(e4);
+        _orders.Add(a1);
+        _orders.Add(a2);
+        _orders.Add(a3);
         StateHasChanged();
     }
 

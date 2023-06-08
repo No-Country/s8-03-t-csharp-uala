@@ -1,9 +1,4 @@
-﻿using System.Net.Http.Json;
-using Newtonsoft.Json;
-using UalaSelecionado8.Models;
-
-
-namespace UalaSelecionado8.Services.Authentication;
+﻿namespace UalaSelecionado8.Services.Authentication;
 
 internal class ComplyCubeService  : IComplyCubeService
 {

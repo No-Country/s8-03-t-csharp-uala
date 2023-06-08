@@ -1,19 +1,17 @@
 ﻿@using System.IdentityModel.Tokens.Jwt
-@using System.Security.Cryptography
-@using System.Text
 <AuthorizeView>
     <Authorized>
         <MudCard Elevation="0" Style="background-color: transparent;" Square="true">
             <MudCardHeader>
                 <CardHeaderAvatar>
                     <MudAvatar>
-                        <MudImage Height="64" Width="64" Alt="Profile Picture" Src="@($"https://api.dicebear.com/6.x/initials/svg?size=64&seed={@context.User.Claims.Single(a => a.Type == JwtRegisteredClaimNames.Name)!.Value}")"></MudImage>
+                        <MudImage Height="64" Width="64" Alt="Profile Picture" Src="@($"https://api.dicebear.com/6.x/initials/svg?size=64&seed={context.User.Claims.Single(a => a.Type == JwtRegisteredClaimNames.Name)!.Value}")"></MudImage>
                     </MudAvatar>
                 </CardHeaderAvatar>
                 <CardHeaderContent>
                     <MudText Typo="Typo.body1">@context.User.Claims.SingleOrDefault(a => a.Type == JwtRegisteredClaimNames.Name)?.Value</MudText>
                     <MudText Typo="Typo.body2">@context.User.Claims.SingleOrDefault(a => a.Type == JwtRegisteredClaimNames.Email)?.Value</MudText>
-                    @foreach (var claim in @context.User.Claims.Where(a => a.Type == ClaimTypes.Role))
+                    @foreach (var claim in context.User.Claims.Where(a => a.Type == ClaimTypes.Role))
                     {
                         <MudChip Label="true" Style="margin-left: 0;margin-right: 0;" Size="Size.Small" Text="@claim.Value" Color="Color.Info" />
                     }

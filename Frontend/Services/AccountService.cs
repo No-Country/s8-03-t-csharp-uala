@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Newtonsoft.Json;
 using UalaSelecionado8.Services.Api;
 
 namespace UalaSelecionado8.Services

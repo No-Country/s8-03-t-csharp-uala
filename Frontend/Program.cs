@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using UalaSelecionado8.Services.Authentication;
 using UalaSelecionado8;
-using UalaSelecionado8.Services.Api;
 using UalaSelecionado8.Services;
+using UalaSelecionado8.Services.Api;
+using UalaSelecionado8.Services.Authentication;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
